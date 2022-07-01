@@ -1,10 +1,10 @@
 package ft.school21.swing.java.model.PlayHelm;
 
-public class WolfArmor extends PlayHelm {
+public class DarkHelm extends PlayHelm {
 
-    public WolfArmor() {
+    public DarkHelm() {
         super();
         this.setStatesHP(15);
-        this.setName("Wolf helm");
+        this.setName("Dark helm");
     }
 }

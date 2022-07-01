@@ -1,9 +1,10 @@
 package ft.school21.swing.java.model;
 
 import ft.school21.swing.java.model.PlayArmor.PlayArmor;
-import ft.school21.swing.java.model.PlayClasses.PlayClasses;
 import ft.school21.swing.java.model.PlayHelm.PlayHelm;
 import ft.school21.swing.java.model.PlayRaces.PlayRaces;
+import ft.school21.swing.java.model.Repositor.Classes;
+import ft.school21.swing.java.model.Repositor.Races;
 import ft.school21.swing.java.model.Weapons.PlayWeapon;
 
 import java.util.Random;
@@ -16,9 +17,10 @@ public class GameActions {
     private Random      random;
     private String      name;
     private double      level;
+    private double      experience;
     private int         attack;
     private PlayRaces   playRaces;
-    private PlayClasses playClasses;
+    private Classes     playClasses;
     private PlayArmor   playArmor;
     private PlayHelm    playHelm;
     private PlayWeapon  playWeapon;
@@ -99,5 +101,53 @@ public class GameActions {
 
     public void setAttack(int attack) {
         this.attack = attack;
+    }
+
+    public Classes getPlayClasses() {
+        return playClasses;
+    }
+
+    public void setPlayClasses(Classes playClasses) {
+        this.playClasses = playClasses;
+    }
+
+    public PlayRaces getPlayRaces() {
+        return playRaces;
+    }
+
+    public void setPlayRaces(PlayRaces playRaces) {
+        this.playRaces = playRaces;
+    }
+
+    public PlayArmor getPlayArmor() {
+        return playArmor;
+    }
+
+    public void setPlayArmor(PlayArmor playArmor) {
+        this.playArmor = playArmor;
+    }
+
+    public PlayHelm getPlayHelm() {
+        return playHelm;
+    }
+
+    public void setPlayHelm(PlayHelm playHelm) {
+        this.playHelm = playHelm;
+    }
+
+    public PlayWeapon getPlayWeapon() {
+        return playWeapon;
+    }
+
+    public void setPlayWeapon(PlayWeapon playWeapon) {
+        this.playWeapon = playWeapon;
+    }
+
+    public double getExperience() {
+        return experience;
+    }
+
+    public void setExperience(double experience) {
+        this.experience = experience;
     }
 }

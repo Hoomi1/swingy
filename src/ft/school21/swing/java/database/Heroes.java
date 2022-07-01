@@ -16,6 +16,9 @@ public class Heroes {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "race")
+    private String race;
+
     @Column(name = "name")
     private String name;
 
@@ -49,8 +52,9 @@ public class Heroes {
     public Heroes() {
     }
 
-    public Heroes(String name, String clas, Double level, Double experience, int attack,
+    public Heroes(String race, String name, String clas, Double level, Double experience, int attack,
                   int defense, int hit_points, String weapon, String armor, String helm) {
+        this.race = race;
         this.name = name;
         this.clas = clas;
         this.level = level;
@@ -61,6 +65,14 @@ public class Heroes {
         this.weapon = weapon;
         this.armor = armor;
         this.helm = helm;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
     }
 
     public String getName() {
@@ -147,6 +159,7 @@ public class Heroes {
     public String toString() {
         return "Heroes{" +
                 "id=" + id +
+                ", race='" + race + '\'' +
                 ", name='" + name + '\'' +
                 ", clas='" + clas + '\'' +
                 ", level=" + level +

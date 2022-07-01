@@ -5,6 +5,6 @@ public class MagicWand extends PlayWeapon{
     public MagicWand() {
         super();
         this.setWeaponAttack(15);
-        this.setWeaponName("Wand"); // Жезл
+        this.setWeaponName("MagicWand"); // Жезл
     }
 }

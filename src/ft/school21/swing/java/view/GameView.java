@@ -8,4 +8,8 @@ public interface GameView {
 
     void drawStartMenu();
     void ChoicePlayer(ArrayList<GameActions> players);
+    void ChoiceRace();
+    void ChoiceClass();
+    void CreateNamePlayer();
+    void ChoiceDeletePlayer();
 }

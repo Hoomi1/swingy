@@ -6,6 +6,7 @@ public class PlayRaces {
     private int playDefense;
     private int playHP;
 
+    public PlayRaces(){}
     public PlayRaces(String playName, int playAttack, int defense, int playHP) {
         this.playName = playName;
         this.playAttack = playAttack;
