@@ -10,6 +10,7 @@ import ft.school21.swing.java.model.Weapons.PlayWeapon;
 import java.util.Random;
 
 public class GameActions {
+    private Long        id;
     private int         posX;
     private int         posY;
     private int         newPosX;
@@ -24,6 +25,7 @@ public class GameActions {
     private PlayArmor   playArmor;
     private PlayHelm    playHelm;
     private PlayWeapon  playWeapon;
+    private int         HP;
 
     public GameActions() {
     }
@@ -41,7 +43,7 @@ public class GameActions {
 
     public void PlusPositionX(Map map)
     {
-        if (ValidPosition(posX + 1, map))
+        if (ValidPosition(posX + 1, map) && map.getMapSymbol(posY, posX + 1) != 'O')
         {
             newPosX = posX;
             newPosY = posY;
@@ -51,7 +53,7 @@ public class GameActions {
 
     public void PlusPositionY(Map map)
     {
-        if (ValidPosition(posY + 1, map))
+        if (ValidPosition(posY + 1, map) && map.getMapSymbol(posY + 1, posX) != 'O')
         {
             newPosX = posX;
             newPosY = posY;
@@ -61,7 +63,7 @@ public class GameActions {
 
     public void MinusPositionX(Map map)
     {
-        if (ValidPosition(posX - 1, map))
+        if (ValidPosition(posX - 1, map) && map.getMapSymbol(posY, posX - 1) != 'O')
         {
             newPosX = posX;
             newPosY = posY;
@@ -71,7 +73,7 @@ public class GameActions {
 
     public void MinusPositionY(Map map)
     {
-        if (ValidPosition(posY - 1, map))
+        if (ValidPosition(posY - 1, map) && map.getMapSymbol(posY - 1, posX) != 'O')
         {
             newPosX = posX;
             newPosY = posY;
@@ -149,5 +151,50 @@ public class GameActions {
 
     public void setExperience(double experience) {
         this.experience = experience;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public void setHP(int HP) {
+        this.HP = HP;
+    }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\'' + "\n" +
+                "level=" + level + "\n" +
+                "experience=" + experience + "\n" +
+                "attack=" + attack + "\n" +
+                "playRaces=" + playRaces.getPlayName() + "\n" +
+                "playClasses=" + playClasses + "\n" +
+                "playArmor=" + playArmor.getName() + "\n" +
+                "playHelm=" + playHelm.getName() + "\n" +
+                "playWeapon=" + playWeapon.getWeaponName();
     }
 }

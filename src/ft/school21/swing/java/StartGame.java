@@ -4,6 +4,7 @@ import ft.school21.swing.java.controller.Controller;
 import ft.school21.swing.java.database.Heroes;
 import ft.school21.swing.java.database.ImplementDB;
 import ft.school21.swing.java.model.GameActions;
+import ft.school21.swing.java.model.Map;
 import ft.school21.swing.java.model.PlayArmor.RagsArmor;
 import ft.school21.swing.java.model.PlayHelm.RagsHelm;
 import ft.school21.swing.java.model.Repositor.Classes;
@@ -15,14 +16,13 @@ import ft.school21.swing.java.view.Gui;
 import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class StartGame {
 
     private static ChoiceGame choiceGame;
-    private static GameView view;
     private static SessionFactory sessionFactory = null;
+
     public static void Game(String arg)
     {
         if (arg.equals("console"))
@@ -44,11 +44,31 @@ public class StartGame {
 //        }
         choiceGame.getView().ChoicePlayer(players);
         Scanner scanner = new Scanner(System.in);
-        CommandScanner(scanner.nextLine().toLowerCase());
+        GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);
+
+        if (newPl != null) {
+            WorkMap(newPl);
+        }
         scanner.close();
     }
 
-    public static void CommandScanner(String command)
+    private static void WorkMap(GameActions players) {
+        Map map = new Map(players);
+        Controller controller = new Controller();
+        while (true)
+        {
+            choiceGame.getView().ShowMap(map, players);
+            if (controller.MovePlayer(players, map))
+            {
+                if (map.getMapSymbol(players.getPosY(), players.getPosX()) == 'E')
+                {
+
+                }
+            }
+        }
+    }
+
+    public static GameActions CommandScanner(String command, ArrayList<GameActions> players)
     {
         Controller controller = new Controller();
         if (command.equals("a"))
@@ -64,16 +84,32 @@ public class StartGame {
             pl.setPlayArmor(new RagsArmor());
             pl.setPlayHelm(new RagsHelm());
             ImplementDB.getImplementDB().AddHeroDB(ParseActions(pl));
+            return pl;
         }
         else if (command.equals("b"))
         {
             choiceGame.getView().ChoiceDeletePlayer();
             controller.DeletePlayer();
         }
-//        else if (Character.isLetter(command.charAt(0)))
-//        {
-//
-//        }
+        else
+        {
+            try {
+                int comInt = Integer.parseInt(command);
+                for (int i = 0; i < players.size(); i++) {
+                    if (players.get(i).getId() == comInt)
+                    {
+                        choiceGame.getView().DataPlayer(players.get(i));
+                        return players.get(i);
+                    }
+                }
+                System.exit(1);
+            }
+            catch (NumberFormatException e)
+            {
+                System.exit(1);
+            }
+        }
+        return null;
     }
 
     public static Heroes ParseActions(GameActions player)

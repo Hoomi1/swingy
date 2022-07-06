@@ -165,6 +165,7 @@ public class ImplementDB {
                             break;
                     }
                 }
+                gameActions.setId(list.get(i).getId());
                 players.add(i, gameActions);
             }
         }

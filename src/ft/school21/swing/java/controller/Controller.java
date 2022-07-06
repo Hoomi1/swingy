@@ -2,9 +2,12 @@ package ft.school21.swing.java.controller;
 
 import ft.school21.swing.java.database.ImplementDB;
 import ft.school21.swing.java.model.GameActions;
+import ft.school21.swing.java.model.Map;
 import ft.school21.swing.java.model.PlayRaces.*;
 import ft.school21.swing.java.model.Repositor.Classes;
+import ft.school21.swing.java.view.ChoiceGame;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Controller {
@@ -64,4 +67,33 @@ public class Controller {
         Long iterPlayer = scanner.nextLong();
         ImplementDB.getImplementDB().DeleteHero(iterPlayer);
     }
+
+    public boolean MovePlayer(GameActions player, Map map)
+    {
+        String command = scanner.nextLine();
+        if (command.toLowerCase().equals("a")) // left
+        {
+            player.MinusPositionX(map);
+        }
+        else if (command.toLowerCase().equals("d")) // right
+        {
+            player.PlusPositionX(map);
+        }
+        else if (command.toLowerCase().equals("w")) // up
+        {
+            player.MinusPositionY(map);
+        }
+        else if (command.toLowerCase().equals("s")) // down
+        {
+            player.PlusPositionY(map);
+        }
+        else
+            return false;
+        return true;
+    }
+
+//    public boolean Battle()
+//    {
+//
+//    }
 }

@@ -6,23 +6,24 @@ public class Map {
     private final Random random;
     private char[][] map;
     private int mapSize;
-    private int mapLevel;
 
-    public Map() {
+    public Map(GameActions player) {
         this.random = new Random();
-        initializeMap();
+        initializeMap(player);
     }
 
-    public void initializeMap()
+    public void initializeMap(GameActions player)
     {
-        mapSize =  (mapLevel - 1) * 5 + 10 - (mapLevel % 2);
+        mapSize =  ((int)player.getLevel() - 1) * 5 + 10 - ((int)player.getLevel() % 2);
         map = new char[mapSize][mapSize];
 
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
-                map[i][j] = '.';
+                map[i][j] = '\u00b7'; // point center
             }
         }
+        player.setPosX(mapSize / 2);
+        player.setPosY(mapSize / 2);
         generatedEnemies();
         generatedObstacle();
     }
@@ -71,14 +72,6 @@ public class Map {
 
     public int getMapSize() {
         return mapSize;
-    }
-
-    public void setMapLevel(int mapLevel) {
-        this.mapLevel = mapLevel;
-    }
-
-    public int getMapLevel() {
-        return mapLevel;
     }
 
     public char getMapSymbol(int i, int j) {

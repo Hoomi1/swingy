@@ -1,6 +1,7 @@
 package ft.school21.swing.java.view;
 
 import ft.school21.swing.java.model.GameActions;
+import ft.school21.swing.java.model.Map;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,16 @@ public class Gui implements GameView{
 
     @Override
     public void ChoiceDeletePlayer() {
+
+    }
+
+    @Override
+    public void DataPlayer(GameActions players) {
+
+    }
+
+    @Override
+    public void ShowMap(Map map, GameActions players) {
 
     }
 }

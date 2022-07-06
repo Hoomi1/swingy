@@ -67,6 +67,10 @@ public class Heroes {
         this.helm = helm;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getRace() {
         return race;
     }
