@@ -14,5 +14,8 @@ public interface GameView {
     void CreateNamePlayer(); // окно для создание имени
     void ChoiceDeletePlayer(); // окно для удаления героя
     void DataPlayer(GameActions players); // данные о выбранном герое
-    void ShowMap(Map map, GameActions players);
+    void ShowMap(Map map, GameActions players); // рисовалка карты
+    void StartBattle(); // окно для выбора сражения
+    void WindowBattle(); // окно для сражения
+    void RandomCube(int i); // игральный куб
 }

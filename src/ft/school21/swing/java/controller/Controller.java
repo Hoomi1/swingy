@@ -1,6 +1,7 @@
 package ft.school21.swing.java.controller;
 
 import ft.school21.swing.java.database.ImplementDB;
+import ft.school21.swing.java.model.Enemy;
 import ft.school21.swing.java.model.GameActions;
 import ft.school21.swing.java.model.Map;
 import ft.school21.swing.java.model.PlayRaces.*;
@@ -8,6 +9,7 @@ import ft.school21.swing.java.model.Repositor.Classes;
 import ft.school21.swing.java.view.ChoiceGame;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
@@ -92,8 +94,38 @@ public class Controller {
         return true;
     }
 
-//    public boolean Battle()
-//    {
-//
-//    }
+    public boolean ChoiceBattle(Map map, GameActions player, ChoiceGame choiceGame)
+    {
+        choiceGame.getView().StartBattle();
+        String command = scanner.nextLine();
+        if (command.toLowerCase().equals("y"))
+        {
+            return true;
+        }
+        else if (command.toLowerCase().equals("n")) {
+            return new Random().nextBoolean();
+        }
+        return true;
+    }
+
+    public boolean RandomBattle(Map map, GameActions player, ChoiceGame choiceGame) {
+        Random random = new Random();
+        int i = random.nextInt(6) + 1;
+        Enemy enemy = new Enemy(player);
+
+        while (true)
+        {
+            choiceGame.getView().RandomCube(i);
+            if (i == 1 || i == 2 || i == 3 || i == 4)
+                player.Attack(enemy);
+            else
+                enemy.Attack(player);
+            if (player.getHP() == 0)
+                return false;
+            else if (enemy.getHP() == 0)
+            {
+                return true;
+            }
+        }
+    }
 }

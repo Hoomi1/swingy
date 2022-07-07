@@ -43,4 +43,19 @@ public class Gui implements GameView{
     public void ShowMap(Map map, GameActions players) {
 
     }
+
+    @Override
+    public void StartBattle() {
+
+    }
+
+    @Override
+    public void WindowBattle() {
+
+    }
+
+    @Override
+    public void RandomCube(int i) {
+
+    }
 }

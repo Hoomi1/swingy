@@ -21,6 +21,7 @@ public class Console implements GameView{
     public void drawStartMenu()
     {
         System.out.println("| ! GAME SWINGY ! |\n");
+        System.out.println("\u2685");
     }
 
     public void ChoicePlayer(ArrayList<GameActions> players)
@@ -133,5 +134,48 @@ public class Console implements GameView{
         }
         else
             System.out.print(map.getMapSymbol(i, j) + " ");
+    }
+
+    @Override
+    public void StartBattle() {
+        System.out.println("--- start a fight? ---");
+        System.out.println("|  Yes -> Y No -> N  |");
+        System.out.println("----------------------");
+    }
+
+    @Override
+    public void WindowBattle() {
+        System.out.print(ANSI_YELLOW);
+        System.out.println("---------------------");
+        System.out.println("|  - |        | -   |");
+        System.out.println("| \\|/          \\|/  |");
+        System.out.println("| / \\          / \\  |");
+        System.out.println("---------------------");
+        System.out.print(ANSI_RESET);
+    }
+
+    @Override
+    public void RandomCube(int i) {
+        switch (i)
+        {
+            case 1:
+                System.out.println("\u2680 -> 1");
+                break;
+            case 2:
+                System.out.println("\u2681 -> 2");
+                break;
+            case 3:
+                System.out.println("\u2682 -> 3");
+                break;
+            case 4:
+                System.out.println("\u2683 -> 4");
+                break;
+            case 5:
+                System.out.println("\u2684 -> 5");
+                break;
+            case 6:
+                System.out.println("\u2685 -> 6");
+                break;
+        }
     }
 }

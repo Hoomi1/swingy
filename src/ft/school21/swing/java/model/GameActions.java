@@ -185,6 +185,34 @@ public class GameActions {
         this.HP = HP;
     }
 
+    public void checkDamage(int amount)
+    {
+        int luckAmount = new Random().nextInt(((int)level + 1) * 10);
+        amount -= (luckAmount + playRaces.getDefense());
+        if (amount <= 0)
+            return;
+        if (HP - amount < 0)
+            HP = 0;
+        else
+            HP -= amount;
+    }
+
+    public void takeDamage(int amount)
+    {
+        if (playArmor != null) {
+            if (playArmor.getDefense() < amount)
+                checkDamage(amount);
+        } else
+            checkDamage(amount);
+    }
+
+    public void Attack(GameActions gameActions)
+    {
+        int attack = getAttack() + playRaces.getPlayAttack()
+                + playWeapon.getWeaponAttack();
+        gameActions.takeDamage(attack);
+    }
+
     @Override
     public String toString() {
         return "name='" + name + '\'' + "\n" +

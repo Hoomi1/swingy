@@ -62,7 +62,11 @@ public class StartGame {
             {
                 if (map.getMapSymbol(players.getPosY(), players.getPosX()) == 'E')
                 {
-
+                    if (controller.ChoiceBattle(map, players, choiceGame))
+                    {
+                        choiceGame.getView().WindowBattle();
+                        controller.RandomBattle(map, players, choiceGame);
+                    }
                 }
             }
         }
