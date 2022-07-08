@@ -20,21 +20,27 @@ public class Console implements GameView{
 
     public void drawStartMenu()
     {
-        System.out.println("| ! GAME SWINGY ! |\n");
-        System.out.println("\u2685");
+        System.out.print(ANSI_GREEN);
+        System.out.println("\n| ! GAME SWINGY ! |\n");
+        System.out.print(ANSI_RESET);
     }
 
     public void ChoicePlayer(ArrayList<GameActions> players)
     {
-
+        System.out.print(ANSI_GREEN);
         System.out.println("--- Choice Player ---");
+        System.out.print(ANSI_PURPLE);
         System.out.println("|ID\t|NAME |");
         for (int i = 0; i < players.size(); i++) {
             System.out.println("|" + players.get(i).getId() + ") -> " + players.get(i).getName() + "|");
         }
+        System.out.print(ANSI_GREEN);
         System.out.println("\n--- Setup ---");
+        System.out.print(ANSI_PURPLE);
         System.out.println("a) -> " + "Create a hero");
         System.out.println("b) -> " + "Delete a hero");
+        System.out.print(ANSI_RESET);
+
     }
 
     @Override
@@ -108,6 +114,7 @@ public class Console implements GameView{
         System.out.println("right\t-> d");
         System.out.println("up\t\t-> w");
         System.out.println("down\t-> s");
+        System.out.println("info\t-> i");
         System.out.println(ANSI_RESET);
     }
 

@@ -1,5 +1,6 @@
 package ft.school21.swing.java.database;
 
+import ft.school21.swing.java.StartGame;
 import ft.school21.swing.java.model.GameActions;
 import ft.school21.swing.java.model.PlayArmor.DarkArmor;
 import ft.school21.swing.java.model.PlayArmor.DragonScaleArmor;
@@ -55,11 +56,24 @@ public class ImplementDB {
 
     public Heroes getHeroDB(Long id)
     {
+
         Session session = factory.getCurrentSession();
         session.beginTransaction();
         Heroes heroes = session.get(Heroes.class, id);
         session.getTransaction().commit();
         return heroes;
+    }
+
+    public void UpdateHeroDB(GameActions player)
+    {
+//        Heroes oldHeroes = getHeroDB(player.getId());
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        Heroes heroes = session.get(Heroes.class, player.getId());
+//        heroes = StartGame.ParseActions(player);
+//        session.createQuery("update Heroes set " + heroes + "where id = " + player.getId()).executeUpdate();
+        //ЗАПРОС НА ОБНОВЛЕНИЕ ОБЪЕКТА
+        session.getTransaction().commit();
     }
 
     public ArrayList<GameActions> getAllHeroesDB()

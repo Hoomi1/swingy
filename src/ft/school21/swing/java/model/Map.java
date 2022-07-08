@@ -3,12 +3,12 @@ package ft.school21.swing.java.model;
 import java.util.Random;
 
 public class Map {
-    private final Random random;
+    private static Random random;
     private char[][] map;
     private int mapSize;
 
     public Map(GameActions player) {
-        this.random = new Random();
+        random = new Random();
         initializeMap(player);
     }
 

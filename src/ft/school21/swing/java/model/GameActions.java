@@ -26,8 +26,19 @@ public class GameActions {
     private PlayHelm    playHelm;
     private PlayWeapon  playWeapon;
     private int         HP;
+    private int         MaxHP;
 
     public GameActions() {
+        HP = 1000;
+        MaxHP = HP;
+    }
+
+    public int getMaxHP() {
+        return MaxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        MaxHP = maxHP;
     }
 
     public void InitStartPos(Map map)
@@ -211,6 +222,18 @@ public class GameActions {
         int attack = getAttack() + playRaces.getPlayAttack()
                 + playWeapon.getWeaponAttack();
         gameActions.takeDamage(attack);
+    }
+
+    public void LevelMap(Map map)
+    {
+        int a = (int)(getLevel() + 1) * 1000 + (int)Math.pow(getLevel(), 2) * 450;
+        if (a <= getExperience())
+        {
+            setLevel(getLevel() + 1);
+            setHP(getHP() + 1000);
+            setMaxHP(getHP());
+            map.initializeMap(this);
+        }
     }
 
     @Override

@@ -33,7 +33,6 @@ public class StartGame {
         {
             choiceGame = new ChoiceGame(new Gui());
         }
-        choiceGame.getView().drawStartMenu();
         ArrayList<GameActions> players = null;
 //        try {
 //            sessionFactory = ImplementDB.getImplementDB().getFactory();
@@ -42,6 +41,7 @@ public class StartGame {
 //        finally {
 //            sessionFactory.close();
 //        }
+        choiceGame.getView().drawStartMenu();
         choiceGame.getView().ChoicePlayer(players);
         Scanner scanner = new Scanner(System.in);
         GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);

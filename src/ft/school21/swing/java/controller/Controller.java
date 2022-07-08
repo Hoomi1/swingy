@@ -4,8 +4,17 @@ import ft.school21.swing.java.database.ImplementDB;
 import ft.school21.swing.java.model.Enemy;
 import ft.school21.swing.java.model.GameActions;
 import ft.school21.swing.java.model.Map;
+import ft.school21.swing.java.model.PlayArmor.DarkArmor;
+import ft.school21.swing.java.model.PlayArmor.DragonScaleArmor;
+import ft.school21.swing.java.model.PlayArmor.RagsArmor;
+import ft.school21.swing.java.model.PlayArmor.WolfArmor;
+import ft.school21.swing.java.model.PlayHelm.DarkHelm;
+import ft.school21.swing.java.model.PlayHelm.DragonScaleHelm;
+import ft.school21.swing.java.model.PlayHelm.RagsHelm;
+import ft.school21.swing.java.model.PlayHelm.WolfHelm;
 import ft.school21.swing.java.model.PlayRaces.*;
 import ft.school21.swing.java.model.Repositor.Classes;
+import ft.school21.swing.java.model.Weapons.*;
 import ft.school21.swing.java.view.ChoiceGame;
 
 import java.io.IOException;
@@ -89,6 +98,10 @@ public class Controller {
         {
             player.PlusPositionY(map);
         }
+        else if (command.toLowerCase().equals("i"))
+        {
+            System.out.println(player.toString());
+        }
         else
             return false;
         return true;
@@ -108,13 +121,94 @@ public class Controller {
         return true;
     }
 
+    private void RandomChoice(int i, char c, GameActions player)
+    {
+        if (c == 'w')
+        {
+            switch (i)
+            {
+                case 1:
+                    player.setPlayWeapon(new Bow());
+                    break;
+                case 2:
+                    player.setPlayWeapon(new Mace());
+                    break;
+                case 3:
+                    player.setPlayWeapon(new MagicWand());
+                    break;
+                case 4:
+                    player.setPlayWeapon(new Staff());
+                    break;
+                case 5:
+                    player.setPlayWeapon(new Sword());
+                    break;
+            }
+        }
+        else if (c == 'h')
+        {
+            switch (i)
+            {
+                case 1:
+                    player.setPlayHelm(new DarkHelm());
+                    break;
+                case 2:
+                    player.setPlayHelm(new DragonScaleHelm());
+                    break;
+                case 3:
+                    player.setPlayHelm(new RagsHelm());
+                    break;
+                case 4:
+                    player.setPlayHelm(new WolfHelm());
+                    break;
+            }
+        }
+        else
+        {
+            switch (i)
+            {
+                case 1:
+                    player.setPlayArmor(new DarkArmor());
+                    break;
+                case 2:
+                    player.setPlayArmor(new DragonScaleArmor());
+                    break;
+                case 3:
+                    player.setPlayArmor(new RagsArmor());
+                    break;
+                case 4:
+                    player.setPlayArmor(new WolfArmor());
+                    break;
+            }
+        }
+    }
+    private void RandomChoiceArtifact(GameActions player)
+    {
+        Random random = new Random();
+        int rand = random.nextInt(4) + 1;
+        if (rand == 2)
+        {
+            int randWeapon = random.nextInt(5) + 1;
+            RandomChoice(randWeapon, 'w', player);
+        }
+        else if (rand == 3)
+        {
+            int randHelm = random.nextInt(4) + 1;
+            RandomChoice(randHelm, 'h', player);
+        }
+        else if (rand == 4)
+        {
+            int randWeapon = random.nextInt(4) + 1;
+            RandomChoice(randWeapon, 'a', player);
+        }
+    }
+
     public boolean RandomBattle(Map map, GameActions player, ChoiceGame choiceGame) {
         Random random = new Random();
-        int i = random.nextInt(6) + 1;
         Enemy enemy = new Enemy(player);
 
         while (true)
         {
+            int i = random.nextInt(6) + 1;
             choiceGame.getView().RandomCube(i);
             if (i == 1 || i == 2 || i == 3 || i == 4)
                 player.Attack(enemy);
@@ -124,6 +218,11 @@ public class Controller {
                 return false;
             else if (enemy.getHP() == 0)
             {
+                player.setHP(player.getMaxHP());
+                player.setExperience(player.getExperience() + enemy.getLevel() * 342 + 1021);
+                player.LevelMap(map);
+                RandomChoiceArtifact(player);
+                ImplementDB.getImplementDB().UpdateHeroDB(player);
                 return true;
             }
         }
