@@ -18,4 +18,8 @@ public interface GameView {
     void StartBattle(); // окно для выбора сражения
     void WindowBattle(); // окно для сражения
     void RandomCube(int i); // игральный куб
+    void youWin(); // окно то что ты выйграл
+    void youDied(); // окно то что ты умер
+    void youRunAway(); // убежал от врага
+    void gameOver();
 }

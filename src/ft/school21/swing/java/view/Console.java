@@ -185,4 +185,33 @@ public class Console implements GameView{
                 break;
         }
     }
+
+    @Override
+    public void youWin() {
+        System.out.print(ANSI_GREEN);
+        System.out.println("--- YOU WIN ---");
+        System.out.print(ANSI_RESET);
+    }
+
+    @Override
+    public void youDied() {
+        System.out.print(ANSI_RED);
+        System.out.println("--- YOU DIED ---");
+        gameOver();
+        System.out.print(ANSI_RESET);
+    }
+
+    @Override
+    public void youRunAway() {
+        System.out.print(ANSI_GREEN);
+        System.out.println("--- YOU RUN AWAY! ---");
+        System.out.print(ANSI_RESET);
+    }
+
+    @Override
+    public void gameOver() {
+        System.out.print(ANSI_RED);
+        System.out.println("--- GAME OVER!!! ---");
+        System.out.print(ANSI_RESET);
+    }
 }

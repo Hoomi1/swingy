@@ -107,7 +107,7 @@ public class Controller {
         return true;
     }
 
-    public boolean ChoiceBattle(Map map, GameActions player, ChoiceGame choiceGame)
+    public boolean ChoiceBattle(ChoiceGame choiceGame)
     {
         choiceGame.getView().StartBattle();
         String command = scanner.nextLine();

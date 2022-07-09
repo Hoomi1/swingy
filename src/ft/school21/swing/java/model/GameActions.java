@@ -239,12 +239,13 @@ public class GameActions {
     @Override
     public String toString() {
         return "name='" + name + '\'' + "\n" +
+                "HP=" + (HP) + "\n" +
                 "level=" + level + "\n" +
                 "experience=" + experience + "\n" +
-                "attack=" + attack + "\n" +
+                "attack=" + (this.getAttack() + getPlayRaces().getPlayAttack()) + "\n" +
                 "playRaces=" + playRaces.getPlayName() + "\n" +
                 "playClasses=" + playClasses + "\n" +
-                "playArmor=" + playArmor.getName() + "\n" +
+                "playArmor=" + getPlayArmor().getName() + "\n" +
                 "playHelm=" + playHelm.getName() + "\n" +
                 "playWeapon=" + playWeapon.getWeaponName();
     }

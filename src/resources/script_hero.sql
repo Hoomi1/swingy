@@ -13,4 +13,4 @@ create table heroes(
     helm VARCHAR(50)
 );
 
--- drop table heroes;
+drop table heroes;

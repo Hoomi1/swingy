@@ -58,4 +58,24 @@ public class Gui implements GameView{
     public void RandomCube(int i) {
 
     }
+
+    @Override
+    public void youWin() {
+
+    }
+
+    @Override
+    public void youDied() {
+
+    }
+
+    @Override
+    public void youRunAway() {
+
+    }
+
+    @Override
+    public void gameOver() {
+
+    }
 }

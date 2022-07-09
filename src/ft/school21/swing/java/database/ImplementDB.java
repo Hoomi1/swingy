@@ -66,13 +66,21 @@ public class ImplementDB {
 
     public void UpdateHeroDB(GameActions player)
     {
-//        Heroes oldHeroes = getHeroDB(player.getId());
         Session session = factory.getCurrentSession();
         session.beginTransaction();
         Heroes heroes = session.get(Heroes.class, player.getId());
-//        heroes = StartGame.ParseActions(player);
-//        session.createQuery("update Heroes set " + heroes + "where id = " + player.getId()).executeUpdate();
-        //ЗАПРОС НА ОБНОВЛЕНИЕ ОБЪЕКТА
+        heroes.setName(player.getName());
+        heroes.setDefense(player.getPlayArmor().getDefense() + player.getPlayRaces().getDefense());
+        heroes.setAttack(player.getAttack());
+        heroes.setExperience(player.getExperience());
+        heroes.setLevel(player.getLevel());
+        heroes.setHit_points(player.getHP());
+        heroes.setRace(player.getPlayRaces().getPlayName());
+        heroes.setClas(player.getPlayClasses().name());
+        heroes.setArmor(player.getPlayArmor().getName());
+        heroes.setHelm(player.getPlayHelm().getName());
+        heroes.setWeapon(player.getPlayWeapon().getWeaponName());
+
         session.getTransaction().commit();
     }
 
@@ -132,30 +140,30 @@ public class ImplementDB {
                 }
                 if (!list.get(i).getArmor().isEmpty()) {
                     switch (list.get(i).getArmor().toLowerCase()) {
-                        case "dark":
+                        case "dark armor":
                             gameActions.setPlayArmor(new DarkArmor());
                             break;
-                        case "dragonscale":
+                        case "dragon scale armor":
                             gameActions.setPlayArmor(new DragonScaleArmor());
                             break;
-                        case "rags":
+                        case "rags armor":
                             gameActions.setPlayArmor(new RagsArmor());
-                        case "wolf":
+                        case "wolf armor":
                             gameActions.setPlayArmor(new WolfArmor());
                     }
                 }
                 if (!list.get(i).getHelm().isEmpty()) {
                     switch (list.get(i).getHelm().toLowerCase()) {
-                        case "dark":
+                        case "dark helm":
                             gameActions.setPlayHelm(new DarkHelm());
                             break;
-                        case "dragonscale":
+                        case "dragon scale helm":
                             gameActions.setPlayHelm(new DragonScaleHelm());
                             break;
-                        case "rags":
+                        case "rags helm":
                             gameActions.setPlayHelm(new RagsHelm());
                             break;
-                        case "wolf":
+                        case "wolf helm":
                             gameActions.setPlayHelm(new WolfHelm());
                             break;
                     }

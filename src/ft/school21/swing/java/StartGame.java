@@ -57,15 +57,38 @@ public class StartGame {
         Controller controller = new Controller();
         while (true)
         {
+            int posx = players.getPosX();
+            int posy = players.getPosY();
+            if (players.getLevel() >= 5)
+            {
+                choiceGame.getView().gameOver();
+                System.exit(0);
+            }
             choiceGame.getView().ShowMap(map, players);
             if (controller.MovePlayer(players, map))
             {
                 if (map.getMapSymbol(players.getPosY(), players.getPosX()) == 'E')
                 {
-                    if (controller.ChoiceBattle(map, players, choiceGame))
+                    if (controller.ChoiceBattle(choiceGame))
                     {
                         choiceGame.getView().WindowBattle();
-                        controller.RandomBattle(map, players, choiceGame);
+                        if (controller.RandomBattle(map, players, choiceGame))
+                        {
+                            choiceGame.getView().youWin();
+                            map.setMapSymbol(players.getPosY(), players.getPosX(), '\u00b7');
+                        }
+                        else
+                        {
+                            choiceGame.getView().youDied();
+                            ImplementDB.getImplementDB().DeleteHero(players.getId());
+                            System.exit(-1);
+                        }
+                    }
+                    else
+                    {
+                        choiceGame.getView().youRunAway();
+                        players.setPosX(posx);
+                        players.setPosY(posy);
                     }
                 }
             }
@@ -77,7 +100,21 @@ public class StartGame {
         Controller controller = new Controller();
         if (command.equals("a"))
         {
+            Long max;
+            try {
+                max = players.get(0).getId();
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                max = 1L;
+            }
+            for (int i = 1; i < players.size(); ++i)
+            {
+                if (max <  players.get(i).getId())
+                    max = players.get(i).getId();
+            }
             GameActions pl = new GameActions();
+            pl.setId(max + 1);
             choiceGame.getView().CreateNamePlayer();
             controller.EnterName(pl);
             choiceGame.getView().ChoiceRace();
@@ -87,6 +124,7 @@ public class StartGame {
             pl.setPlayWeapon(new Bow());
             pl.setPlayArmor(new RagsArmor());
             pl.setPlayHelm(new RagsHelm());
+            pl.setAttack(pl.getAttack());
             ImplementDB.getImplementDB().AddHeroDB(ParseActions(pl));
             return pl;
         }
@@ -119,36 +157,37 @@ public class StartGame {
     public static Heroes ParseActions(GameActions player)
     {
         Heroes heroes = new Heroes();
+        heroes.setId(player.getId());
         switch (player.getPlayRaces().getPlayName().toLowerCase())
         {
             case "darkelf":
                 heroes.setRace("DarkElf");
                 heroes.setAttack(player.getAttack() + player.getPlayRaces().getPlayAttack());
-                heroes.setHit_points(player.getPlayRaces().getPlayHP());
+                heroes.setHit_points(player.getHP());
                 heroes.setDefense(player.getPlayRaces().getDefense());
                 break;
             case "dwarf":
                 heroes.setRace("Dwarf");
                 heroes.setAttack(player.getAttack() + player.getPlayRaces().getPlayAttack());
-                heroes.setHit_points(player.getPlayRaces().getPlayHP());
+                heroes.setHit_points(player.getHP());
                 heroes.setDefense(player.getPlayRaces().getDefense());
                 break;
             case "elf":
                 heroes.setRace("Elf");
                 heroes.setAttack(player.getAttack() + player.getPlayRaces().getPlayAttack());
-                heroes.setHit_points(player.getPlayRaces().getPlayHP());
+                heroes.setHit_points(player.getHP());
                 heroes.setDefense(player.getPlayRaces().getDefense());
                 break;
             case "human":
                 heroes.setRace("Human");
                 heroes.setAttack(player.getAttack() + player.getPlayRaces().getPlayAttack());
-                heroes.setHit_points(player.getPlayRaces().getPlayHP());
+                heroes.setHit_points(player.getHP());
                 heroes.setDefense(player.getPlayRaces().getDefense());
                 break;
             case "orc":
                 heroes.setRace("Orc");
                 heroes.setAttack(player.getAttack() + player.getPlayRaces().getPlayAttack());
-                heroes.setHit_points(player.getPlayRaces().getPlayHP());
+                heroes.setHit_points(player.getHP());
                 heroes.setDefense(player.getPlayRaces().getDefense());
                 break;
         }
