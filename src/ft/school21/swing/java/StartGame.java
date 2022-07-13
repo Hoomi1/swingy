@@ -100,21 +100,22 @@ public class StartGame {
         Controller controller = new Controller();
         if (command.equals("a"))
         {
+            GameActions pl = new GameActions();
             Long max;
             try {
                 max = players.get(0).getId();
+                for (int i = 1; i < players.size(); ++i)
+                {
+                    if (max <  players.get(i).getId())
+                        max = players.get(i).getId();
+                }
+                pl.setId(max + 1);
             }
             catch (IndexOutOfBoundsException e)
             {
                 max = 1L;
+                pl.setId(max);
             }
-            for (int i = 1; i < players.size(); ++i)
-            {
-                if (max <  players.get(i).getId())
-                    max = players.get(i).getId();
-            }
-            GameActions pl = new GameActions();
-            pl.setId(max + 1);
             choiceGame.getView().CreateNamePlayer();
             controller.EnterName(pl);
             choiceGame.getView().ChoiceRace();

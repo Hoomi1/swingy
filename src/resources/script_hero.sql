@@ -1,3 +1,5 @@
+drop table heroes;
+
 create table heroes(
     id BIGSERIAL primary key not null,
     race VARCHAR(50) not null,
@@ -13,4 +15,3 @@ create table heroes(
     helm VARCHAR(50)
 );
 
-drop table heroes;

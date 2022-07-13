@@ -69,14 +69,14 @@ public class ImplementDB {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
         Heroes heroes = session.get(Heroes.class, player.getId());
-        heroes.setName(player.getName());
+//        heroes.setName(player.getName());
         heroes.setDefense(player.getPlayArmor().getDefense() + player.getPlayRaces().getDefense());
         heroes.setAttack(player.getAttack());
         heroes.setExperience(player.getExperience());
         heroes.setLevel(player.getLevel());
         heroes.setHit_points(player.getHP());
-        heroes.setRace(player.getPlayRaces().getPlayName());
-        heroes.setClas(player.getPlayClasses().name());
+//        heroes.setRace(player.getPlayRaces().getPlayName());
+//        heroes.setClas(player.getPlayClasses().name());
         heroes.setArmor(player.getPlayArmor().getName());
         heroes.setHelm(player.getPlayHelm().getName());
         heroes.setWeapon(player.getPlayWeapon().getWeaponName());

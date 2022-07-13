@@ -17,7 +17,12 @@ public class Main {
             System.exit(1);
         }
         if (args[0].equals("console") || args[0].equals("gui")) {
-            StartGame.Game(args[0]);
+            try {
+                StartGame.Game(args[0]);
+            }
+            finally {
+                ImplementDB.getImplementDB().getFactory().close();
+            }
         }
         else
         {
