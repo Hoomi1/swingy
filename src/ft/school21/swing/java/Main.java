@@ -9,6 +9,9 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 public class Main {
+
+    public static boolean flagGui;
+
     public static void main(String[] args) {
         if (args.length != 1)
         {
@@ -31,7 +34,7 @@ public class Main {
         }
 
         //TODO: дальнейшая работа с бд
-        SessionFactory sessionFactory = null;
+//        SessionFactory sessionFactory = null;
 //        try {
 //        Heroes heroes = new Heroes("orc", "asd3", "asd", 12.0, 12.0, 12, 2, 45, "bow", "dark", "dark");
 

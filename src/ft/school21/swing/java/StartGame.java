@@ -42,7 +42,16 @@ public class StartGame {
 //            sessionFactory.close();
 //        }
         choiceGame.getView().drawStartMenu();
+        while (true) {
+            if (Main.flagGui)
+                break;
+        }
+        Main.flagGui = false;
         choiceGame.getView().ChoicePlayer(players);
+        while (true) {
+            if (Main.flagGui)
+                break;
+        }
         Scanner scanner = new Scanner(System.in);
         GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);
 
