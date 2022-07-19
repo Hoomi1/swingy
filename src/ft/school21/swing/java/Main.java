@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Main {
 
-    public static boolean flagGui;
+    public static volatile boolean flagGui;
 
     public static void main(String[] args) {
         if (args.length != 1)

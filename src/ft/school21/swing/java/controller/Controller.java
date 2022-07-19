@@ -1,5 +1,6 @@
 package ft.school21.swing.java.controller;
 
+import ft.school21.swing.java.Main;
 import ft.school21.swing.java.database.ImplementDB;
 import ft.school21.swing.java.model.Enemy;
 import ft.school21.swing.java.model.GameActions;
@@ -24,6 +25,10 @@ import java.util.Scanner;
 public class Controller {
 
     public static Scanner scanner = new Scanner(System.in);
+    public static Long idDel;
+    public static String createName;
+    public static int createRace;
+
     public void EnterClass(GameActions newPlayer)
     {
         int classPl = scanner.nextInt();
@@ -46,8 +51,14 @@ public class Controller {
 
     public void EnterName(GameActions newPlayer)
     {
-        newPlayer.setName(scanner.next());
-        scanner.nextLine();
+        if (!Main.flagGui) {
+            newPlayer.setName(scanner.next());
+            scanner.nextLine();
+        }
+        else {
+            newPlayer.setName(createName);
+            Main.flagGui = false;
+        }
     }
 
     public void EnterRace(GameActions newPlayer)
@@ -75,8 +86,14 @@ public class Controller {
 
     public void DeletePlayer()
     {
-        Long iterPlayer = scanner.nextLong();
-        ImplementDB.getImplementDB().DeleteHero(iterPlayer);
+        if (Main.flagGui != true)
+        {
+            Long iterPlayer = scanner.nextLong();
+            ImplementDB.getImplementDB().DeleteHero(iterPlayer);
+        }
+        else {
+            ImplementDB.getImplementDB().DeleteHero(Controller.idDel);
+        }
     }
 
     public boolean MovePlayer(GameActions player, Map map)

@@ -21,7 +21,8 @@ import java.util.Scanner;
 public class StartGame {
 
     private static ChoiceGame choiceGame;
-    private static SessionFactory sessionFactory = null;
+//    private static SessionFactory sessionFactory = null;
+    public static String commandGui;
 
     public static void Game(String arg)
     {
@@ -42,23 +43,37 @@ public class StartGame {
 //            sessionFactory.close();
 //        }
         choiceGame.getView().drawStartMenu();
-        while (true) {
-            if (Main.flagGui)
-                break;
-        }
+//        while (true) {
+//            if (Main.flagGui)
+//                break;
+//        }
+        Inf();
         Main.flagGui = false;
         choiceGame.getView().ChoicePlayer(players);
+        Inf();
+        if (Main.flagGui == false) {
+            Scanner scanner = new Scanner(System.in);
+            GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);
+            if (newPl != null) {
+                WorkMap(newPl);
+            }
+            scanner.close();
+        }
+        else
+        {
+            GameActions newPl = CommandScanner(commandGui, players);
+            if (newPl != null) {
+                WorkMap(newPl);
+            }
+        }
+    }
+
+    private static void Inf()
+    {
         while (true) {
             if (Main.flagGui)
                 break;
         }
-        Scanner scanner = new Scanner(System.in);
-        GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);
-
-        if (newPl != null) {
-            WorkMap(newPl);
-        }
-        scanner.close();
     }
 
     private static void WorkMap(GameActions players) {
@@ -127,10 +142,15 @@ public class StartGame {
             }
             choiceGame.getView().CreateNamePlayer();
             controller.EnterName(pl);
+            Inf();
+            Main.flagGui = false;
             choiceGame.getView().ChoiceRace();
             controller.EnterRace(pl);
+            Inf();
+            Main.flagGui = false;
             choiceGame.getView().ChoiceClass();
             controller.EnterClass(pl);
+            Inf();
             pl.setPlayWeapon(new Bow());
             pl.setPlayArmor(new RagsArmor());
             pl.setPlayHelm(new RagsHelm());
