@@ -27,6 +27,7 @@ public class Gui extends JFrame implements GameView{
     public static JFormattedTextField EnterId = new JFormattedTextField("        ");
     public static JFormattedTextField EnterName = new JFormattedTextField("        ");
     public static JFormattedTextField EnterRace = new JFormattedTextField("        ");
+    public static JFormattedTextField EnterClass = new JFormattedTextField("        ");
     public static int getMacSizeWidth() {
         return MacSizeWidth;
     }
@@ -123,12 +124,24 @@ public class Gui extends JFrame implements GameView{
         JButton[] jButtonPlayers = new JButton[players.size()];
         for (int i = 0; i < jButtonPlayers.length; i++) {
             jButtonPlayers[i] = new JButton(players.get(i).getId() + ") -> " + players.get(i).getName());
+            jButtonPlayers[i].addActionListener(new ButtonPlayer());
             jPanel.add(jButtonPlayers[i]);
         }
 
         add(jPanelBorder, BorderLayout.SOUTH);
         add(jPanel);
         setVisible(true);
+    }
+
+    private class ButtonPlayer implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            setVisible(true);
+//            StartGame.commandGui = "a";
+//            String isSpace = EnterId.getText().trim();
+//            Controller.idDel = Long.parseLong(isSpace);
+//            Controller.idPlayer =
+//            Main.flagGui = true;
+        }
     }
 
     private class ButtonCreateHero implements ActionListener {
@@ -154,33 +167,51 @@ public class Gui extends JFrame implements GameView{
     @Override
     public void ChoiceRace() {
         ClearWindow();
-//        JPanel jPanelRace = new JPanel(new FlowLayout());
-//        JLabel textRaceDarkElf = new JLabel();
-//        JLabel textRaceDwarf = new JLabel();
-//        JLabel textRaceElf = new JLabel();
-//        JLabel textRaceHuman = new JLabel();
-//        JLabel textRaceOrc = new JLabel();
-//        textRaceDarkElf.setText("1) DarkElf\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
-//        textRaceDwarf.setText("2) Dwarf\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
-//        textRaceElf.setText("3) Elf\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
-//        textRaceHuman.setText("4) Human\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
-//        textRaceOrc.setText("5) Orc\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
-//        jPanelRace.add(textRaceDarkElf, BorderLayout.SOUTH);
-//        jPanelRace.add(textRaceDwarf, BorderLayout.SOUTH);
-//        jPanelRace.add(textRaceElf, BorderLayout.SOUTH);
-//        jPanelRace.add(textRaceHuman, BorderLayout.SOUTH);
-//        jPanelRace.add(textRaceOrc, BorderLayout.SOUTH);
+        JPanel jPanelRace = new JPanel(new GridLayout());
+
+        JTextArea textRaceDarkElf = new JTextArea();
+        JTextArea textRaceDwarf = new JTextArea();
+        JTextArea textRaceElf = new JTextArea();
+        JTextArea textRaceHuman = new JTextArea();
+        JTextArea textRaceOrc = new JTextArea();
+        textRaceDarkElf.setText("1) DarkElf\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
+        textRaceDwarf.setText("2) Dwarf\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
+        textRaceElf.setText("3) Elf\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
+        textRaceHuman.setText("4) Human\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
+        textRaceOrc.setText("5) Orc\t" + "\nAttack=15;\t" + "\nDefense=2;\t" + "\nHP=40.   \t");
+        jPanelRace.add(textRaceDarkElf);
+        jPanelRace.add(textRaceDwarf);
+        jPanelRace.add(textRaceElf);
+        jPanelRace.add(textRaceHuman);
+        jPanelRace.add(textRaceOrc);
+        jPanelRace.setPreferredSize(new Dimension(800, 70));
+
+        JPanel jPanelImages = new JPanel(new GridLayout());
+        MyImage image1 = new MyImage("src/resources/images/face_DarkElf.png", 0,0);
+        MyImage image2 = new MyImage("src/resources/images/face_Dwarf.png", 0,0);
+        MyImage image3 = new MyImage("src/resources/images/face_Elf.png", 0,0);
+        MyImage image4 = new MyImage("src/resources/images/face_Human.png", 0,0);
+        MyImage image5 = new MyImage("src/resources/images/face_Orc.png", 0,0);
+        jPanelImages.add(image1);
+        jPanelImages.add(image2);
+        jPanelImages.add(image3);
+        jPanelImages.add(image4);
+        jPanelImages.add(image5);
+        jPanelImages.setPreferredSize(new Dimension(800, 160));
+
 
         JPanel jPanelBorderLayout = new JPanel(new BorderLayout());
         JPanel jPanel = new JPanel();
         jPanel.setBackground(Color.GREEN);
+        jPanelRace.setBackground(Color.GREEN);
         JLabel textEnterRace = new JLabel("Enter race: ");
         EnterRace.addActionListener(new ButtonEnterRace());
-        jPanel.setPreferredSize(new Dimension(800, 100));
+        jPanel.setPreferredSize(new Dimension(800, 30));
         jPanel.add(textEnterRace);
         jPanel.add(EnterRace);
-//        jPanel.add(jPanelRace);
-        jPanelBorderLayout.add(jPanel);
+        jPanelBorderLayout.add(jPanel, BorderLayout.NORTH);
+        jPanelBorderLayout.add(jPanelImages, BorderLayout.CENTER);
+        jPanelBorderLayout.add(jPanelRace, BorderLayout.SOUTH);
         add(jPanelBorderLayout, BorderLayout.NORTH);
         setVisible(true);
     }
@@ -188,15 +219,76 @@ public class Gui extends JFrame implements GameView{
     private class ButtonEnterRace implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             setVisible(true);
-            Controller.createRace = Integer.parseInt(EnterRace.getText().trim());
-            Main.flagGui = true;
+            try {
+                Controller.createRace = Integer.parseInt(EnterRace.getText().trim());
+                Main.flagGui = true;
+            }
+            catch (NumberFormatException ex)
+            {
+                Main.flagGui = false;
+            }
         }
     }
 
     @Override
     public void ChoiceClass() {
         ClearWindow();
-        JLabel textEnterClasses = new JLabel("Enter class: ");
+        JPanel jPanelClasses = new JPanel(new GridLayout());
+
+        JTextArea textClassWarrior = new JTextArea();
+        JTextArea textClassWizard = new JTextArea();
+        JTextArea textClassBerserk = new JTextArea();
+        JTextArea textClassNecromancer = new JTextArea();
+        textClassWarrior.setText("1) Warrior");
+        textClassWizard.setText("2) Wizard");
+        textClassBerserk.setText("3) Berserk");
+        textClassNecromancer.setText("4) Necromancer");
+        jPanelClasses.add(textClassWarrior);
+        jPanelClasses.add(textClassWizard);
+        jPanelClasses.add(textClassBerserk);
+        jPanelClasses.add(textClassNecromancer);
+        jPanelClasses.setPreferredSize(new Dimension(800, 30));
+
+        JPanel jPanelImages = new JPanel(new GridLayout());
+        MyImage image1 = new MyImage("src/resources/images/class_Warrior.png", 0,0);
+        MyImage image2 = new MyImage("src/resources/images/class_Wizard.png", 0,0);
+        MyImage image3 = new MyImage("src/resources/images/class_Berserk.png", 0,0);
+        MyImage image4 = new MyImage("src/resources/images/class_Necromancer.png", 0,0);
+        jPanelImages.add(image1);
+        jPanelImages.add(image2);
+        jPanelImages.add(image3);
+        jPanelImages.add(image4);
+        jPanelImages.setPreferredSize(new Dimension(800, 200));
+
+
+        JPanel jPanelBorderLayout = new JPanel(new BorderLayout());
+        JPanel jPanel = new JPanel();
+        jPanel.setBackground(Color.GREEN);
+        jPanelClasses.setBackground(Color.GREEN);
+        JLabel textEnterRace = new JLabel("Enter class: ");
+        EnterClass.addActionListener(new ButtonEnterClass());
+        jPanel.setPreferredSize(new Dimension(800, 30));
+        jPanel.add(textEnterRace);
+        jPanel.add(EnterClass);
+        jPanelBorderLayout.add(jPanel, BorderLayout.NORTH);
+        jPanelBorderLayout.add(jPanelImages, BorderLayout.CENTER);
+        jPanelBorderLayout.add(jPanelClasses, BorderLayout.SOUTH);
+        add(jPanelBorderLayout, BorderLayout.NORTH);
+        setVisible(true);
+    }
+
+    private class ButtonEnterClass implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            setVisible(true);
+            try {
+                Controller.createClass = Integer.parseInt(EnterClass.getText().trim());
+                Main.flagGui = true;
+            }
+            catch (NumberFormatException ex)
+            {
+                Main.flagGui = false;
+            }
+        }
     }
 
     @Override
@@ -238,6 +330,7 @@ public class Gui extends JFrame implements GameView{
 
     @Override
     public void ShowMap(Map map, GameActions players) {
+        ClearWindow();
 
     }
 

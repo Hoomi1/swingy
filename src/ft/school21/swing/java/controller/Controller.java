@@ -26,12 +26,18 @@ public class Controller {
 
     public static Scanner scanner = new Scanner(System.in);
     public static Long idDel;
+    public static Long idPlayer;
     public static String createName;
     public static int createRace;
+    public static int createClass;
 
     public void EnterClass(GameActions newPlayer)
     {
-        int classPl = scanner.nextInt();
+        int classPl;
+        if (!Main.flagGui)
+            classPl = scanner.nextInt();
+        else
+            classPl = Controller.createClass;
         switch (classPl)
         {
             case 1:
@@ -63,7 +69,11 @@ public class Controller {
 
     public void EnterRace(GameActions newPlayer)
     {
-        int racePl = scanner.nextInt();
+        int racePl = 0;
+        if (!Main.flagGui)
+            racePl = scanner.nextInt();
+        else
+            racePl = Controller.createRace;
         switch (racePl)
         {
             case 1:

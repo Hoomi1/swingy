@@ -140,17 +140,19 @@ public class StartGame {
                 max = 1L;
                 pl.setId(max);
             }
+            Main.flagGui = false;
             choiceGame.getView().CreateNamePlayer();
-            controller.EnterName(pl);
             Inf();
+            controller.EnterName(pl);
             Main.flagGui = false;
             choiceGame.getView().ChoiceRace();
-            controller.EnterRace(pl);
             Inf();
+            controller.EnterRace(pl);
             Main.flagGui = false;
             choiceGame.getView().ChoiceClass();
-            controller.EnterClass(pl);
             Inf();
+            controller.EnterClass(pl);
+            Main.flagGui = false;
             pl.setPlayWeapon(new Bow());
             pl.setPlayArmor(new RagsArmor());
             pl.setPlayHelm(new RagsHelm());
