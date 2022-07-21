@@ -172,7 +172,9 @@ public class StartGame {
                 for (int i = 0; i < players.size(); i++) {
                     if (players.get(i).getId() == comInt)
                     {
+                        Main.flagGui = false;
                         choiceGame.getView().DataPlayer(players.get(i));
+                        Inf();
                         return players.get(i);
                     }
                 }

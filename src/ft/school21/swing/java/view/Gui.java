@@ -28,6 +28,8 @@ public class Gui extends JFrame implements GameView{
     public static JFormattedTextField EnterName = new JFormattedTextField("        ");
     public static JFormattedTextField EnterRace = new JFormattedTextField("        ");
     public static JFormattedTextField EnterClass = new JFormattedTextField("        ");
+    private JButton[] jButtonPlayers;
+
     public static int getMacSizeWidth() {
         return MacSizeWidth;
     }
@@ -121,7 +123,7 @@ public class Gui extends JFrame implements GameView{
         jPanelBorder.setPreferredSize(new Dimension(800, 80));
         jPanelBorder.add(jPanelSettings);
         jPanel.setBackground(Color.ORANGE);
-        JButton[] jButtonPlayers = new JButton[players.size()];
+        jButtonPlayers = new JButton[players.size()];
         for (int i = 0; i < jButtonPlayers.length; i++) {
             jButtonPlayers[i] = new JButton(players.get(i).getId() + ") -> " + players.get(i).getName());
             jButtonPlayers[i].addActionListener(new ButtonPlayer());
@@ -136,11 +138,10 @@ public class Gui extends JFrame implements GameView{
     private class ButtonPlayer implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             setVisible(true);
-//            StartGame.commandGui = "a";
-//            String isSpace = EnterId.getText().trim();
-//            Controller.idDel = Long.parseLong(isSpace);
-//            Controller.idPlayer =
-//            Main.flagGui = true;
+
+            char idHero = ((JButton) e.getSource()).getText().charAt(0);
+            StartGame.commandGui = String.valueOf(idHero);
+            Main.flagGui = true;
         }
     }
 
@@ -325,13 +326,48 @@ public class Gui extends JFrame implements GameView{
 
     @Override
     public void DataPlayer(GameActions players) {
+        ClearWindow();
+        JPanel jPanelData = new JPanel(new BorderLayout());
+        JPanel jPanelButton = new JPanel(new BorderLayout());
+        JButton jButtonOk = new JButton("OK");
+        jButtonOk.addActionListener(new ButtonOk());
+        jButtonOk.setBackground(Color.ORANGE);
+        jPanelButton.setBackground(Color.ORANGE);
+        jButtonOk.setSize(50, 50);
+        JTextArea textData = new JTextArea("\n\n\n\n\n\n\n"
+                + "Name: " + players.getName() + "\n\n"
+                + "HP: " + String.valueOf(players.getHP()) + "\n\n"
+                + "Level: " + String.valueOf(players.getLevel()) +"\n\n"
+                + "EXP: " + String.valueOf(players.getExperience()) + "\n\n"
+                + "Attack: " + String.valueOf(players.getAttack() + players.getPlayRaces().getPlayAttack()) + "\n\n"
+                + "Race: " + players.getPlayRaces().getPlayName() + "\n\n"
+                + "Class: " + players.getPlayClasses().name() + "\n\n"
+                + "Armor: " + players.getPlayArmor().getName() + "\n\n"
+                + "Helm: " + players.getPlayHelm().getName() + "\n\n"
+                + "Weapon: " + players.getPlayWeapon().getWeaponName()
+        );
+        textData.setBackground(Color.GREEN);
 
+        jPanelData.add(textData);
+        jPanelButton.add(jButtonOk);
+        add(jPanelData, BorderLayout.CENTER);
+        add(jPanelButton, BorderLayout.NORTH);
+        setVisible(true);
+
+    }
+
+    private class ButtonOk implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setVisible(true);
+            Main.flagGui = true;
+        }
     }
 
     @Override
     public void ShowMap(Map map, GameActions players) {
         ClearWindow();
-
+        
     }
 
     @Override

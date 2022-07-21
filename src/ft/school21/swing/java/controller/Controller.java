@@ -18,7 +18,6 @@ import ft.school21.swing.java.model.Repositor.Classes;
 import ft.school21.swing.java.model.Weapons.*;
 import ft.school21.swing.java.view.ChoiceGame;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -26,7 +25,6 @@ public class Controller {
 
     public static Scanner scanner = new Scanner(System.in);
     public static Long idDel;
-    public static Long idPlayer;
     public static String createName;
     public static int createRace;
     public static int createClass;
