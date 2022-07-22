@@ -367,7 +367,135 @@ public class Gui extends JFrame implements GameView{
     @Override
     public void ShowMap(Map map, GameActions players) {
         ClearWindow();
-        
+        int wh = 0;
+        int whDimension = 140;
+        this.setBounds(getMacSizeWidth()/2 - 1200/2, getMacSizeHeight()/2 - 1200/2, 1200, 1200);
+        JPanel jPanelLeft = new JPanel(new BorderLayout());
+        JPanel jPanelRight = new JPanel(new BorderLayout());
+        JPanel jPanelUp = new JPanel(new BorderLayout());
+        JPanel jPanelDown = new JPanel(new BorderLayout());
+        JPanel jPanelCenter = new JPanel();
+        JPanel jPanelMove = new JPanel(new GridBagLayout());
+
+        JButton buttonUp = new JButton("UP");
+        JButton buttonDown = new JButton("DOWN");
+        JButton buttonLeft = new JButton("LEFT");
+        JButton buttonRight = new JButton("RIGHT");
+        JButton buttonInfo = new JButton("INFO");
+
+        buttonUp.addActionListener(new ButtonMoveUp());
+        buttonDown.addActionListener(new ButtonMoveDown());
+        buttonLeft.addActionListener(new ButtonMoveLeft());
+        buttonRight.addActionListener(new ButtonMoveRight());
+
+        MyImage imageObs = new MyImage("src/resources/images/obstacle.png", 0,0);
+        MyImage imageEval = new MyImage("src/resources/images/eval.png", 0,0);
+        MyImage imagePlayer = new MyImage("src/resources/images/face_Elf.png", 0,0);
+
+        jPanelMove.setBackground(new Color(153,102,0));
+        jPanelMove.add(buttonUp, new GridBagConstraints(2,0,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        jPanelMove.add(buttonDown, new GridBagConstraints(2,2,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        jPanelMove.add(buttonLeft, new GridBagConstraints(1,1,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        jPanelMove.add(buttonRight, new GridBagConstraints(3,1,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        jPanelMove.add(buttonInfo, new GridBagConstraints(2,1,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+
+        jPanelDown.add(jPanelMove);
+
+//        jPanelCenter.setBorder(BorderFactory.createLineBorder(Color.black));
+        if (map.getMapSize() == 5)
+            wh = 160;
+        else if (map.getMapSize() == 9)
+            wh = 89;
+        else if (map.getMapSize() == 15)
+            wh = 53;
+        else if (map.getMapSize() == 19)
+            wh = 42;
+        else if (map.getMapSize() == 25) {
+            wh = 32;
+            whDimension = 120;
+        }
+        JPanel jPanelCoord[] = new JPanel[map.getMapSize()];
+        for (int i = 0; i < map.getMapSize(); i++) {
+            for (int j = 0; j < map.getMapSize(); j++) {
+                jPanelCoord[j] = new JPanel();
+//                JLabel text = new JLabel(String.valueOf(j+1));
+//                jPanelCoord[j].add(text);
+                jPanelCoord[j].setPreferredSize(new Dimension(wh, wh));
+                if (players.getPosX() == j && players.getPosY() == i) {
+                    jPanelCoord[j].setBackground(Color.ORANGE);
+//                    jPanelCoord[j].add(imagePlayer);
+                }
+                else {
+                    if (map.getMapSymbol(i, j) == '\u00b7')
+                        jPanelCoord[j].setBackground(Color.BLUE);
+                    else if (map.getMapSymbol(i, j) == 'E') {
+                        jPanelCoord[j].setBackground(Color.RED);
+//                        jPanelCoord[j].add(imageEval);
+                    }
+                    else if (map.getMapSymbol(i, j) == 'O') {
+                        jPanelCoord[j].setBackground(Color.black);
+//                        jPanelCoord[j].add(imageObs);
+                    }
+                }
+                jPanelCoord[j].setLayout(new FlowLayout());
+                jPanelCoord[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                jPanelCenter.add(jPanelCoord[j]);
+            }
+        }
+
+        jPanelCenter.setBackground(new Color(0, 204, 0));
+        jPanelLeft.setBackground(new Color(153,102,0));
+        jPanelRight.setBackground(new Color(153,102,0));
+        jPanelUp.setBackground(new Color(153,102,0));
+        jPanelDown.setBackground(new Color(153,102,0));
+        jPanelRight.setPreferredSize(new Dimension(whDimension, 1000));
+        jPanelLeft.setPreferredSize(new Dimension(whDimension, 1000));
+        jPanelUp.setPreferredSize(new Dimension(1000, whDimension));
+        jPanelDown.setPreferredSize(new Dimension(1000, whDimension)); //20
+        add(jPanelUp, BorderLayout.NORTH);
+        add(jPanelRight, BorderLayout.LINE_END);
+        add(jPanelDown, BorderLayout.SOUTH);
+        add(jPanelLeft, BorderLayout.LINE_START);
+        add(jPanelCenter, BorderLayout.CENTER);
+        setVisible(true);
+    }
+
+    private class ButtonMoveUp implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    private class ButtonMoveDown implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    private class ButtonMoveLeft implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    private class ButtonMoveRight implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
     }
 
     @Override
@@ -404,4 +532,5 @@ public class Gui extends JFrame implements GameView{
     public void gameOver() {
 
     }
+
 }
