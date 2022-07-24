@@ -1,6 +1,7 @@
 package ft.school21.swing.java.controller;
 
 import ft.school21.swing.java.Main;
+import ft.school21.swing.java.StartGame;
 import ft.school21.swing.java.database.ImplementDB;
 import ft.school21.swing.java.model.Enemy;
 import ft.school21.swing.java.model.GameActions;
@@ -17,6 +18,7 @@ import ft.school21.swing.java.model.PlayRaces.*;
 import ft.school21.swing.java.model.Repositor.Classes;
 import ft.school21.swing.java.model.Weapons.*;
 import ft.school21.swing.java.view.ChoiceGame;
+import org.hibernate.type.YesNoType;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -28,6 +30,8 @@ public class Controller {
     public static String createName;
     public static int createRace;
     public static int createClass;
+    public static String createMove;
+    public static String createYesNo;
 
     public void EnterClass(GameActions newPlayer)
     {
@@ -104,9 +108,13 @@ public class Controller {
         }
     }
 
-    public boolean MovePlayer(GameActions player, Map map)
+    public boolean MovePlayer(GameActions player, Map map, ChoiceGame choiceGame)
     {
-        String command = scanner.nextLine();
+        String command = null;
+        if (!Main.flagGui)
+            command = scanner.nextLine();
+        else
+            command = Controller.createMove;
         if (command.toLowerCase().equals("a")) // left
         {
             player.MinusPositionX(map);
@@ -125,7 +133,10 @@ public class Controller {
         }
         else if (command.toLowerCase().equals("i"))
         {
-            System.out.println(player.toString());
+//            System.out.println(player.toString());
+            Main.flagGui = false;
+            choiceGame.getView().DataPlayer(player);
+            StartGame.Inf();
         }
         else
             return false;
@@ -134,8 +145,14 @@ public class Controller {
 
     public boolean ChoiceBattle(ChoiceGame choiceGame)
     {
+        Main.flagGui = false;
         choiceGame.getView().StartBattle();
-        String command = scanner.nextLine();
+        StartGame.Inf();
+        String command = null;
+        if (!Main.flagGui)
+            command = scanner.nextLine();
+        else
+            command = createYesNo;
         if (command.toLowerCase().equals("y"))
         {
             return true;
@@ -234,7 +251,9 @@ public class Controller {
         while (true)
         {
             int i = random.nextInt(6) + 1;
+            Main.flagGui = false;
             choiceGame.getView().RandomCube(i);
+            StartGame.Inf();
             if (i == 1 || i == 2 || i == 3 || i == 4)
                 player.Attack(enemy);
             else

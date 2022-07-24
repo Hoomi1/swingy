@@ -23,12 +23,10 @@ public class Gui extends JFrame implements GameView{
     private static final int    SCREEN_WIDTH =  800;
     private static int MacSizeWidth;
     private static int MacSizeHeight;
-//    public static JLabel textEnterId = new JLabel("Enter id for delete Hero");
     public static JFormattedTextField EnterId = new JFormattedTextField("        ");
     public static JFormattedTextField EnterName = new JFormattedTextField("        ");
     public static JFormattedTextField EnterRace = new JFormattedTextField("        ");
     public static JFormattedTextField EnterClass = new JFormattedTextField("        ");
-    private JButton[] jButtonPlayers;
 
     public static int getMacSizeWidth() {
         return MacSizeWidth;
@@ -38,14 +36,25 @@ public class Gui extends JFrame implements GameView{
         return MacSizeHeight;
     }
 
-    public Gui(){
-        super("SWINGY");
+    private void SizeMyWindow()
+    {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         this.setBounds(dimension.width/2 - SCREEN_WIDTH/2, dimension.height/2 - SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setVisible(false);
         this.setResizable(false);
         MacSizeWidth = dimension.width;
         MacSizeHeight = dimension.height;
+    }
+
+    public Gui(){
+        super("SWINGY");
+//        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+//        this.setBounds(dimension.width/2 - SCREEN_WIDTH/2, dimension.height/2 - SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT);
+//        this.setVisible(false);
+//        this.setResizable(false);
+//        MacSizeWidth = dimension.width;
+//        MacSizeHeight = dimension.height;
+        SizeMyWindow();
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -79,7 +88,7 @@ public class Gui extends JFrame implements GameView{
 
         @Override
         public Dimension getPreferredSize() {
-            return (new Dimension(700, 400));
+            return (new Dimension(1000, 1000));
         }
     }
 
@@ -96,13 +105,11 @@ public class Gui extends JFrame implements GameView{
         add(image);
 
         setVisible(true);
-
     }
 
     private class SwitchButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             setVisible(true);
-            //ClearWindow();
             Main.flagGui = true;
         }
     }
@@ -123,7 +130,7 @@ public class Gui extends JFrame implements GameView{
         jPanelBorder.setPreferredSize(new Dimension(800, 80));
         jPanelBorder.add(jPanelSettings);
         jPanel.setBackground(Color.ORANGE);
-        jButtonPlayers = new JButton[players.size()];
+        JButton[] jButtonPlayers = new JButton[players.size()];
         for (int i = 0; i < jButtonPlayers.length; i++) {
             jButtonPlayers[i] = new JButton(players.get(i).getId() + ") -> " + players.get(i).getName());
             jButtonPlayers[i].addActionListener(new ButtonPlayer());
@@ -133,6 +140,7 @@ public class Gui extends JFrame implements GameView{
         add(jPanelBorder, BorderLayout.SOUTH);
         add(jPanel);
         setVisible(true);
+        pack();
     }
 
     private class ButtonPlayer implements ActionListener {
@@ -215,6 +223,7 @@ public class Gui extends JFrame implements GameView{
         jPanelBorderLayout.add(jPanelRace, BorderLayout.SOUTH);
         add(jPanelBorderLayout, BorderLayout.NORTH);
         setVisible(true);
+        pack();
     }
 
     private class ButtonEnterRace implements ActionListener {
@@ -276,6 +285,7 @@ public class Gui extends JFrame implements GameView{
         jPanelBorderLayout.add(jPanelClasses, BorderLayout.SOUTH);
         add(jPanelBorderLayout, BorderLayout.NORTH);
         setVisible(true);
+        pack();
     }
 
     private class ButtonEnterClass implements ActionListener {
@@ -306,6 +316,7 @@ public class Gui extends JFrame implements GameView{
         jPanelBorderLayout.add(jPanel);
         add(jPanelBorderLayout, BorderLayout.NORTH);
         setVisible(true);
+        pack();
     }
 
     private class ButtonEnterName implements ActionListener {
@@ -327,6 +338,9 @@ public class Gui extends JFrame implements GameView{
     @Override
     public void DataPlayer(GameActions players) {
         ClearWindow();
+        SizeMyWindow();
+
+        setVisible(true);
         JPanel jPanelData = new JPanel(new BorderLayout());
         JPanel jPanelButton = new JPanel(new BorderLayout());
         JButton jButtonOk = new JButton("OK");
@@ -353,7 +367,6 @@ public class Gui extends JFrame implements GameView{
         add(jPanelData, BorderLayout.CENTER);
         add(jPanelButton, BorderLayout.NORTH);
         setVisible(true);
-
     }
 
     private class ButtonOk implements ActionListener {
@@ -387,12 +400,24 @@ public class Gui extends JFrame implements GameView{
         buttonDown.addActionListener(new ButtonMoveDown());
         buttonLeft.addActionListener(new ButtonMoveLeft());
         buttonRight.addActionListener(new ButtonMoveRight());
+        buttonInfo.addActionListener(new ButtonInfo());
 
-        MyImage imageObs = new MyImage("src/resources/images/obstacle.png", 0,0);
-        MyImage imageEval = new MyImage("src/resources/images/eval.png", 0,0);
-        MyImage imagePlayer = new MyImage("src/resources/images/face_Elf.png", 0,0);
+//        MyImage imageObs = new MyImage("src/resources/images/face_DarkElf.png", 0,0);
+//        MyImage imageEval = new MyImage("src/resources/images/face_Orc.png", 0,0);
 
-        jPanelMove.setBackground(new Color(153,102,0));
+        MyImage imagePlayer = null;
+        if (players.getPlayRaces().getPlayName().toLowerCase().equals("darkelf"))
+            imagePlayer = new MyImage("src/resources/images/face_DarkElf.png", 0,0);
+        else if (players.getPlayRaces().getPlayName().toLowerCase().equals("dwarf"))
+            imagePlayer = new MyImage("src/resources/images/face_Dwarf.png", 0,0);
+        else if (players.getPlayRaces().getPlayName().toLowerCase().equals("elf"))
+            imagePlayer = new MyImage("src/resources/images/face_Elf.png", 0,0);
+        else if (players.getPlayRaces().getPlayName().toLowerCase().equals("human"))
+            imagePlayer = new MyImage("src/resources/images/face_Human.png", 0,0);
+        else if (players.getPlayRaces().getPlayName().toLowerCase().equals("orc"))
+            imagePlayer = new MyImage("src/resources/images/face_Orc.png", 0,0);
+
+            jPanelMove.setBackground(new Color(153,102,0));
         jPanelMove.add(buttonUp, new GridBagConstraints(2,0,1,1,0,0,
                 GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
                 new Insets(2,2,2,2),0,0));
@@ -411,7 +436,6 @@ public class Gui extends JFrame implements GameView{
 
         jPanelDown.add(jPanelMove);
 
-//        jPanelCenter.setBorder(BorderFactory.createLineBorder(Color.black));
         if (map.getMapSize() == 5)
             wh = 160;
         else if (map.getMapSize() == 9)
@@ -427,33 +451,36 @@ public class Gui extends JFrame implements GameView{
         JPanel jPanelCoord[] = new JPanel[map.getMapSize()];
         for (int i = 0; i < map.getMapSize(); i++) {
             for (int j = 0; j < map.getMapSize(); j++) {
-                jPanelCoord[j] = new JPanel();
+                jPanelCoord[j] = new JPanel(new BorderLayout());
 //                JLabel text = new JLabel(String.valueOf(j+1));
 //                jPanelCoord[j].add(text);
                 jPanelCoord[j].setPreferredSize(new Dimension(wh, wh));
                 if (players.getPosX() == j && players.getPosY() == i) {
-                    jPanelCoord[j].setBackground(Color.ORANGE);
-//                    jPanelCoord[j].add(imagePlayer);
+                    if (wh < 89)
+                        jPanelCoord[j].setBackground(new Color(102, 0, 153));
+                    else
+                    jPanelCoord[j].add(imagePlayer, BorderLayout.CENTER);
                 }
                 else {
                     if (map.getMapSymbol(i, j) == '\u00b7')
-                        jPanelCoord[j].setBackground(Color.BLUE);
+                        jPanelCoord[j].setBackground(new Color(0,102,0));
                     else if (map.getMapSymbol(i, j) == 'E') {
                         jPanelCoord[j].setBackground(Color.RED);
 //                        jPanelCoord[j].add(imageEval);
                     }
                     else if (map.getMapSymbol(i, j) == 'O') {
-                        jPanelCoord[j].setBackground(Color.black);
+                        jPanelCoord[j].setBackground(Color.BLUE);
 //                        jPanelCoord[j].add(imageObs);
                     }
                 }
-                jPanelCoord[j].setLayout(new FlowLayout());
+//                jPanelCoord[j].setLayout(new FlowLayout());
                 jPanelCoord[j].setBorder(BorderFactory.createLineBorder(Color.black));
                 jPanelCenter.add(jPanelCoord[j]);
+                setVisible(true);
             }
         }
 
-        jPanelCenter.setBackground(new Color(0, 204, 0));
+        jPanelCenter.setBackground(new Color(102,255,102));
         jPanelLeft.setBackground(new Color(153,102,0));
         jPanelRight.setBackground(new Color(153,102,0));
         jPanelUp.setBackground(new Color(153,102,0));
@@ -473,64 +500,291 @@ public class Gui extends JFrame implements GameView{
     private class ButtonMoveUp implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.createMove = "w";
+            Main.flagGui = true;
         }
     }
 
     private class ButtonMoveDown implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.createMove = "s";
+            Main.flagGui = true;
         }
     }
 
     private class ButtonMoveLeft implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.createMove = "a";
+            Main.flagGui = true;
         }
     }
 
     private class ButtonMoveRight implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Controller.createMove = "d";
+            Main.flagGui = true;
+        }
+    }
 
+    private class ButtonInfo implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Controller.createMove = "i";
+            Main.flagGui = true;
         }
     }
 
     @Override
     public void StartBattle() {
+        ClearWindow();
+        JPanel jPanel= new JPanel(new FlowLayout());
 
+        JButton jButtonYes = new JButton("YES");
+        JButton jButtonNo = new JButton("NO");
+
+        JLabel textFight = new JLabel();
+        textFight.setText("Start a fight?");
+
+        jButtonYes.addActionListener(new ButtonYes());
+        jButtonNo.addActionListener(new ButtonNo());
+
+        jPanel.add(jButtonYes);
+        jPanel.add(jButtonNo);
+
+        add(textFight, BorderLayout.NORTH);
+        add(jPanel);
+        setVisible(true);
+        pack();
+    }
+
+    private class ButtonYes implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Controller.createYesNo = "y";
+            Main.flagGui = true;
+        }
+    }
+
+    private class ButtonNo implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Controller.createYesNo = "n";
+            Main.flagGui = true;
+        }
     }
 
     @Override
     public void WindowBattle() {
+        ClearWindow();
+        SizeMyWindow();
 
+        JPanel jPanelHero = new JPanel(new BorderLayout());
+        JPanel jPanelEvil = new JPanel(new BorderLayout());
+        JPanel jPanelAll = new JPanel(new GridBagLayout());
+        JPanel jPanelCube = new JPanel(new BorderLayout());
+        JLabel textVS = new JLabel("----VS----");
+        JButton jButton = new JButton("FIGHT!!!");
+        MyImage imageHero = new MyImage("src/resources/images/class_Warrior.png",0,0);
+        MyImage imageEvil = new MyImage("src/resources/images/evil.png",0,0);
+
+        jPanelEvil.setPreferredSize(new Dimension(150, 150));
+        jPanelHero.setPreferredSize(new Dimension(150, 150));
+        jPanelCube.setPreferredSize(new Dimension(75, 75));
+        jPanelEvil.add(imageEvil);
+        jPanelHero.add(imageHero);
+        jPanelCube.setBorder(BorderFactory.createLineBorder(Color.black));
+        jPanelEvil.setBorder(BorderFactory.createLineBorder(Color.black));
+        jPanelHero.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        jButton.addActionListener(new ButtonFight());
+
+        jPanelAll.add(jPanelHero, new GridBagConstraints(0,0,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,5,5),0,0));
+        jPanelAll.add(textVS, new GridBagConstraints(1,0,1,1,0,0,
+                GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+                new Insets(5,5,5,5),0,0));
+        jPanelAll.add(jPanelEvil, new GridBagConstraints(2,0,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,5,5,2),0,0));
+        jPanelAll.add(jButton, new GridBagConstraints(1,1,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(5,5,0,5),0,0));
+        jPanelAll.add(jPanelCube, new GridBagConstraints(0,3,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        add(jPanelAll);
+        setVisible(true);
+        pack();
+    }
+
+    private class ButtonFight implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Main.flagGui = true;
+        }
+    }
+
+    private MyImage ChoiceCube(int i)
+    {
+        MyImage imageCube = null;
+        if (i == 1)
+        {
+            imageCube = new MyImage("src/resources/images/Cube/Cube1.png", 0,0);
+        }
+        else if (i == 2)
+        {
+            imageCube = new MyImage("src/resources/images/Cube/Cube2.png", 0,0);
+        }
+        else if (i == 3)
+        {
+            imageCube = new MyImage("src/resources/images/Cube/Cube3.png", 0,0);
+        }
+        else if (i == 4)
+        {
+            imageCube = new MyImage("src/resources/images/Cube/Cube4.png", 0,0);
+        }
+        else if (i == 5)
+        {
+            imageCube = new MyImage("src/resources/images/Cube/Cube5.png", 0,0);
+        }
+        else
+        {
+            imageCube = new MyImage("src/resources/images/Cube/Cube6.png", 0,0);
+        }
+        return imageCube;
     }
 
     @Override
     public void RandomCube(int i) {
+        ClearWindow();
+        SizeMyWindow();
 
+        JPanel jPanelHero = new JPanel(new BorderLayout());
+        JPanel jPanelEvil = new JPanel(new BorderLayout());
+        JPanel jPanelAll = new JPanel(new GridBagLayout());
+        JPanel jPanelCube = new JPanel(new BorderLayout());
+        JLabel textVS = new JLabel("----VS----");
+        JButton jButton = new JButton("FIGHT!!!");
+        MyImage imageHero = new MyImage("src/resources/images/class_Warrior.png",0,0);
+        MyImage imageEvil = new MyImage("src/resources/images/evil.png",0,0);
+
+        jPanelEvil.setPreferredSize(new Dimension(150, 150));
+        jPanelHero.setPreferredSize(new Dimension(150, 150));
+        jPanelCube.setPreferredSize(new Dimension(75, 75));
+        jPanelEvil.add(imageEvil);
+        jPanelHero.add(imageHero);
+        jPanelCube.setBorder(BorderFactory.createLineBorder(Color.black));
+        jPanelEvil.setBorder(BorderFactory.createLineBorder(Color.black));
+        jPanelHero.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        jButton.addActionListener(new ButtonFight());
+
+        if (i == 1 || i == 2 || i == 3 || i == 4)
+            jPanelCube.setBorder(BorderFactory.createLineBorder(Color.green));
+        else
+            jPanelCube.setBorder(BorderFactory.createLineBorder(Color.red));
+        jPanelCube.add(ChoiceCube(i), BorderLayout.CENTER);
+        jPanelAll.add(jPanelHero, new GridBagConstraints(0,0,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,5,5),0,0));
+        jPanelAll.add(textVS, new GridBagConstraints(1,0,1,1,0,0,
+                GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+                new Insets(5,5,5,5),0,0));
+        jPanelAll.add(jPanelEvil, new GridBagConstraints(2,0,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,5,5,2),0,0));
+        jPanelAll.add(jButton, new GridBagConstraints(1,1,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(5,5,0,5),0,0));
+        jPanelAll.add(jPanelCube, new GridBagConstraints(0,3,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        add(jPanelAll);
+        setVisible(true);
+        pack();
     }
 
     @Override
     public void youWin() {
-
+        ClearWindow();
+        SizeMyWindow();
+        JLabel textVictory = new JLabel("Victory!");
+        JPanel jPanelVic = new JPanel(new BorderLayout());
+        MyImage imageVictory = new MyImage("src/resources/images/EndOfBattle/Victory.png", 0,0);
+        jPanelVic.setPreferredSize(new Dimension(400, 300));
+        add(textVictory, BorderLayout.SOUTH);
+        jPanelVic.add(imageVictory, BorderLayout.CENTER);
+        add(jPanelVic);
+        setVisible(true);
+        pack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void youDied() {
-
+        ClearWindow();
+        SizeMyWindow();
+        JLabel textDead = new JLabel("You Dead!");
+        JPanel jPanelDead = new JPanel(new BorderLayout());
+        MyImage imageDefeat = new MyImage("src/resources/images/EndOfBattle/Defeat.png", 0,0);
+        jPanelDead.setPreferredSize(new Dimension(400, 300));
+        add(textDead, BorderLayout.SOUTH);
+        jPanelDead.add(imageDefeat, BorderLayout.CENTER);
+        add(jPanelDead);
+        setVisible(true);
+        pack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void youRunAway() {
-
+        ClearWindow();
+        SizeMyWindow();
+        JLabel textRun = new JLabel("You run away!");
+        JPanel jPanelRunAway = new JPanel(new BorderLayout());
+        MyImage imageRunAway = new MyImage("src/resources/images/EndOfBattle/RunAway.png", 0,0);
+        jPanelRunAway.setPreferredSize(new Dimension(400, 300));
+        add(textRun, BorderLayout.SOUTH);
+        jPanelRunAway.add(imageRunAway, BorderLayout.CENTER);
+        add(jPanelRunAway);
+        setVisible(true);
+        pack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void gameOver() {
+        ClearWindow();
+        SizeMyWindow();
 
+        JPanel jPanel = new JPanel(new BorderLayout());
+        MyImage image = new MyImage("src/resources/images/EndOfBattle/GameOver.png", 0,0);
+        jPanel.setPreferredSize(new Dimension(480, 480));
+        jPanel.add(image, BorderLayout.CENTER);
+        add(jPanel);
+        setVisible(true);
+        pack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

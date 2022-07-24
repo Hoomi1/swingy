@@ -23,16 +23,19 @@ public class StartGame {
     private static ChoiceGame choiceGame;
 //    private static SessionFactory sessionFactory = null;
     public static String commandGui;
+    public static boolean gui;
 
     public static void Game(String arg)
     {
         if (arg.equals("console"))
         {
             choiceGame = new ChoiceGame(new Console());
+            gui = false;
         }
         else
         {
             choiceGame = new ChoiceGame(new Gui());
+            gui = true;
         }
         ArrayList<GameActions> players = null;
 //        try {
@@ -42,6 +45,7 @@ public class StartGame {
 //        finally {
 //            sessionFactory.close();
 //        }
+        Main.flagGui = false;
         choiceGame.getView().drawStartMenu();
 //        while (true) {
 //            if (Main.flagGui)
@@ -68,11 +72,13 @@ public class StartGame {
         }
     }
 
-    private static void Inf()
+    public static void Inf()
     {
-        while (true) {
-            if (Main.flagGui)
-                break;
+        if (gui) {
+            while (true) {
+                if (Main.flagGui)
+                    break;
+            }
         }
     }
 
@@ -88,14 +94,18 @@ public class StartGame {
                 choiceGame.getView().gameOver();
                 System.exit(0);
             }
+            Main.flagGui = false;
             choiceGame.getView().ShowMap(map, players);
-            if (controller.MovePlayer(players, map))
+            Inf();
+            if (controller.MovePlayer(players, map, choiceGame))
             {
                 if (map.getMapSymbol(players.getPosY(), players.getPosX()) == 'E')
                 {
                     if (controller.ChoiceBattle(choiceGame))
                     {
+                        Main.flagGui = false;
                         choiceGame.getView().WindowBattle();
+                        Inf();
                         if (controller.RandomBattle(map, players, choiceGame))
                         {
                             choiceGame.getView().youWin();
