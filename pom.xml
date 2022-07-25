@@ -3,9 +3,56 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>swingy</groupId>
     <artifactId>java</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1</version>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>7</source>-->
+<!--                    <target>7</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+
     <build>
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/resources</directory>-->
+<!--                <includes>-->
+<!--                    <include>**/*.xml</include>-->
+<!--                </includes>-->
+<!--            </resource>-->
+<!--        </resources>-->
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ft.school21.swing.java.Main</mainClass>
+                        </manifest>
+                    </archive>
+<!--                    <descriptorRefs>-->
+<!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                    </descriptorRefs>-->
+                    <finalName>swingy</finalName>
+<!--                    <appendAssemblyId>false</appendAssemblyId>-->
+                </configuration>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>assemble-all</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>single</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

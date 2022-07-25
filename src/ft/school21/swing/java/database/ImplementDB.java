@@ -100,6 +100,8 @@ public class ImplementDB {
                     gameActions.setName(list.get(i).getName());
                 if (list.get(i).getLevel() >= 0)
                     gameActions.setLevel(list.get(i).getLevel());
+                if ((list.get(i).getExperience() >= 0))
+                    gameActions.setExperience(list.get(i).getExperience());
                 if (list.get(i).getAttack() >= 0)
                     gameActions.setAttack(list.get(i).getAttack());
                 if (!list.get(i).getClas().isEmpty()) {
