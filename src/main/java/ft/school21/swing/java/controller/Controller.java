@@ -18,6 +18,8 @@ import ft.school21.swing.java.model.PlayRaces.*;
 import ft.school21.swing.java.model.Repositor.Classes;
 import ft.school21.swing.java.model.Weapons.*;
 import ft.school21.swing.java.view.ChoiceGame;
+import ft.school21.swing.java.view.Console;
+import ft.school21.swing.java.view.Gui;
 import org.hibernate.type.YesNoType;
 
 import java.util.Random;
@@ -137,6 +139,21 @@ public class Controller {
             Main.flagGui = false;
             choiceGame.getView().DataPlayer(player);
             StartGame.Inf();
+        }
+        else if (command.toLowerCase().equals("g"))
+        {
+            Main.flagGui = false;
+            if (!StartGame.gui)
+            {
+                StartGame.gui = true;
+                choiceGame = new ChoiceGame(new Gui());
+            }
+            else
+            {
+                StartGame.gui = false;
+                choiceGame = new ChoiceGame(new Console());
+            }
+            return false;
         }
         else
             return false;

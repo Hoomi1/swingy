@@ -11,12 +11,16 @@ import ft.school21.swing.java.model.Repositor.Classes;
 import ft.school21.swing.java.model.Weapons.Bow;
 import ft.school21.swing.java.view.ChoiceGame;
 import ft.school21.swing.java.view.Console;
-import ft.school21.swing.java.view.GameView;
 import ft.school21.swing.java.view.Gui;
-import org.hibernate.SessionFactory;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class StartGame {
 
@@ -37,10 +41,12 @@ public class StartGame {
             choiceGame = new ChoiceGame(new Gui());
             gui = true;
         }
+
         ArrayList<GameActions> players = null;
 //        try {
 //            sessionFactory = ImplementDB.getImplementDB().getFactory();
             players = ImplementDB.getImplementDB().getAllHeroesDB();
+
 //        }
 //        finally {
 //            sessionFactory.close();
@@ -183,6 +189,16 @@ public class StartGame {
                     if (players.get(i).getId() == comInt)
                     {
                         Main.flagGui = false;
+                        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                        Validator validator = factory.getValidator();
+                        Set<ConstraintViolation<GameActions>> violations = validator.validate(players.get(i));
+                        if (!violations.isEmpty()) {
+                            StringBuilder log = new StringBuilder();
+                            for (ConstraintViolation<GameActions> errors : violations) {
+                                log.append(errors.getMessage()).append("\n");
+                            }
+                            throw new ParametrsException(log.toString());
+                        }
                         choiceGame.getView().DataPlayer(players.get(i));
                         Inf();
                         return players.get(i);
@@ -193,6 +209,10 @@ public class StartGame {
             catch (NumberFormatException e)
             {
                 System.exit(1);
+            }
+            catch (IllegalArgumentException e)
+            {
+                throw new ParametrsException("some parameters are null");
             }
         }
         return null;

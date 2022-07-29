@@ -115,6 +115,7 @@ public class Console implements GameView{
         System.out.println("up\t-> w");
         System.out.println("down\t-> s");
         System.out.println("info\t-> i");
+        System.out.println("GUI\t-> g");
         System.out.println(ANSI_RESET);
     }
 

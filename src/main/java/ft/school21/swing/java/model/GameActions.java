@@ -7,6 +7,8 @@ import ft.school21.swing.java.model.Repositor.Classes;
 import ft.school21.swing.java.model.Repositor.Races;
 import ft.school21.swing.java.model.Weapons.PlayWeapon;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Random;
 
 public class GameActions {
@@ -16,15 +18,25 @@ public class GameActions {
     private int         newPosX;
     private int         newPosY;
     private Random      random;
+    @NotNull(message = "Name cannot be null")
     private String      name;
+    @Min(value = 0, message = "Parameter starts from 0")
     private double      level;
+    @Min(value = 0, message = "Parameter starts from 0")
     private double      experience;
+    @Min(value = 0, message = "Parameter starts from 0")
     private int         attack;
+    @NotNull(message = "Race cannot be null")
     private PlayRaces   playRaces;
+    @NotNull(message = "Class cannot be null")
     private Classes     playClasses;
+    @NotNull(message = "Armor cannot be null")
     private PlayArmor   playArmor;
+    @NotNull(message = "Helm cannot be null")
     private PlayHelm    playHelm;
+    @NotNull(message = "Weapon cannot be null")
     private PlayWeapon  playWeapon;
+    @Min(value = 1000, message = "Parameter starts from 0")
     private int         HP;
     private int         MaxHP;
 

@@ -432,12 +432,14 @@ public class Gui extends JFrame implements GameView{
         JButton buttonLeft = new JButton("LEFT");
         JButton buttonRight = new JButton("RIGHT");
         JButton buttonInfo = new JButton("INFO");
+        JButton buttonConsole = new JButton("CONSOLE");
 
         buttonUp.addActionListener(new ButtonMoveUp());
         buttonDown.addActionListener(new ButtonMoveDown());
         buttonLeft.addActionListener(new ButtonMoveLeft());
         buttonRight.addActionListener(new ButtonMoveRight());
         buttonInfo.addActionListener(new ButtonInfo());
+        buttonConsole.addActionListener(new ButtonConsole());
 
 //        MyImage imageObs = new MyImage("src/resources/images/face_DarkElf.png", 0,0);
 //        MyImage imageEval = new MyImage("src/resources/images/face_Orc.png", 0,0);
@@ -480,6 +482,9 @@ public class Gui extends JFrame implements GameView{
                 GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
                 new Insets(2,2,2,2),0,0));
         jPanelMove.add(buttonInfo, new GridBagConstraints(2,1,1,1,0,0,
+                GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
+                new Insets(2,2,2,2),0,0));
+        jPanelMove.add(buttonConsole, new GridBagConstraints(15,4,1,1,0,0,
                 GridBagConstraints.NORTH,GridBagConstraints.HORIZONTAL,
                 new Insets(2,2,2,2),0,0));
 
@@ -544,6 +549,17 @@ public class Gui extends JFrame implements GameView{
         add(jPanelLeft, BorderLayout.LINE_START);
         add(jPanelCenter, BorderLayout.CENTER);
         setVisible(true);
+    }
+
+    private class ButtonConsole implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ClearWindow();
+            Controller.createMove = "g";
+            Main.flagGui = true;
+            setVisible(false);
+        }
     }
 
     private class ButtonMoveUp implements ActionListener {
