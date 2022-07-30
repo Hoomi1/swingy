@@ -22,6 +22,8 @@ import ft.school21.swing.java.view.Console;
 import ft.school21.swing.java.view.Gui;
 import org.hibernate.type.YesNoType;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,6 +36,7 @@ public class Controller {
     public static int createClass;
     public static String createMove;
     public static String createYesNo;
+    public static boolean flagDEl;
 
     public void EnterClass(GameActions newPlayer)
     {
@@ -55,6 +58,10 @@ public class Controller {
                 break;
             case 4:
                 newPlayer.setPlayClasses(Classes.Necromancer);
+                break;
+            default:
+                System.err.println("selection range from 1-4");
+                System.exit(1);
                 break;
         }
     }
@@ -95,19 +102,36 @@ public class Controller {
             case 5:
                 newPlayer.setPlayRaces(new Orc());
                 break;
+            default:
+                System.err.println("selection range from 1-5");
+                System.exit(1);
+                break;
         }
     }
 
-    public void DeletePlayer()
+    public void DeletePlayer(ArrayList<GameActions> players)
     {
-        if (Main.flagGui != true)
-        {
-            Long iterPlayer = scanner.nextLong();
-            ImplementDB.getImplementDB().DeleteHero(iterPlayer);
-        }
-        else {
-            ImplementDB.getImplementDB().DeleteHero(Controller.idDel);
-        }
+            if (Main.flagGui != true) {
+                try {
+                    Long iterPlayer = scanner.nextLong();
+                    for (int i = 0; i < players.size(); i++) {
+                        if (iterPlayer == players.get(i).getId())
+                            ImplementDB.getImplementDB().DeleteHero(iterPlayer);
+                    }
+                }
+                catch (InputMismatchException ex)
+                {
+                }
+            } else {
+                for (int i = 0; i < players.size(); i++) {
+                    if (Controller.idDel == players.get(i).getId()) {
+                        ImplementDB.getImplementDB().DeleteHero(Controller.idDel);
+                        flagDEl = false;
+                        break;
+                    }
+                    flagDEl = true;
+                }
+            }
     }
 
     public boolean MovePlayer(GameActions player, Map map, ChoiceGame choiceGame)
@@ -166,18 +190,20 @@ public class Controller {
         choiceGame.getView().StartBattle();
         StartGame.Inf();
         String command = null;
-        if (!Main.flagGui)
-            command = scanner.nextLine();
-        else
-            command = createYesNo;
-        if (command.toLowerCase().equals("y"))
-        {
-            return true;
+        while (true) {
+            if (!Main.flagGui)
+                command = scanner.nextLine();
+            else
+                command = createYesNo;
+            if (command.toLowerCase().equals("y")) {
+                return true;
+            } else if (command.toLowerCase().equals("n")) {
+                return new Random().nextBoolean();
+            } else {
+                System.err.println("Only y | n !!!");
+                continue;
+            }
         }
-        else if (command.toLowerCase().equals("n")) {
-            return new Random().nextBoolean();
-        }
-        return true;
     }
 
     private void RandomChoice(int i, char c, GameActions player)

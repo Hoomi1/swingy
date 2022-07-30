@@ -19,6 +19,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -63,11 +64,15 @@ public class StartGame {
         Inf();
         if (Main.flagGui == false) {
             Scanner scanner = new Scanner(System.in);
-            GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);
-            if (newPl != null) {
-                WorkMap(newPl);
-            }
-            scanner.close();
+                GameActions newPl = CommandScanner(scanner.nextLine().toLowerCase(), players);
+                if (newPl != null) {
+                    WorkMap(newPl);
+                }
+                else
+                {
+                    System.err.println("invalid id");
+                }
+                scanner.close();
         }
         else
         {
@@ -98,7 +103,7 @@ public class StartGame {
             if (players.getLevel() >= 5)
             {
                 choiceGame.getView().gameOver();
-                System.exit(0);
+                break;
             }
             Main.flagGui = false;
             choiceGame.getView().ShowMap(map, players);
@@ -156,30 +161,37 @@ public class StartGame {
                 max = 1L;
                 pl.setId(max);
             }
-            Main.flagGui = false;
-            choiceGame.getView().CreateNamePlayer();
-            Inf();
-            controller.EnterName(pl);
-            Main.flagGui = false;
-            choiceGame.getView().ChoiceRace();
-            Inf();
-            controller.EnterRace(pl);
-            Main.flagGui = false;
-            choiceGame.getView().ChoiceClass();
-            Inf();
-            controller.EnterClass(pl);
-            Main.flagGui = false;
-            pl.setPlayWeapon(new Bow());
-            pl.setPlayArmor(new RagsArmor());
-            pl.setPlayHelm(new RagsHelm());
-            pl.setAttack(pl.getAttack());
-            ImplementDB.getImplementDB().AddHeroDB(ParseActions(pl));
+            try {
+                Main.flagGui = false;
+                choiceGame.getView().CreateNamePlayer();
+                Inf();
+                controller.EnterName(pl);
+                Main.flagGui = false;
+                choiceGame.getView().ChoiceRace();
+                Inf();
+                controller.EnterRace(pl);
+                Main.flagGui = false;
+                choiceGame.getView().ChoiceClass();
+                Inf();
+                controller.EnterClass(pl);
+                Main.flagGui = false;
+                pl.setPlayWeapon(new Bow());
+                pl.setPlayArmor(new RagsArmor());
+                pl.setPlayHelm(new RagsHelm());
+                pl.setAttack(pl.getAttack());
+                ImplementDB.getImplementDB().AddHeroDB(ParseActions(pl));
+            }
+            catch (InputMismatchException e)
+            {
+                System.err.println("invalid arguments");
+                return null;
+            }
             return pl;
         }
         else if (command.equals("b"))
         {
             choiceGame.getView().ChoiceDeletePlayer();
-            controller.DeletePlayer();
+            controller.DeletePlayer(players);
         }
         else
         {
@@ -204,11 +216,12 @@ public class StartGame {
                         return players.get(i);
                     }
                 }
-                System.exit(1);
+//                System.exit(1);
             }
             catch (NumberFormatException e)
             {
-                System.exit(1);
+//                System.exit(1);
+                System.out.println("there are no letters in id");
             }
             catch (IllegalArgumentException e)
             {

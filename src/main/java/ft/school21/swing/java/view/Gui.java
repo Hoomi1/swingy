@@ -180,11 +180,17 @@ public class Gui extends JFrame implements GameView{
 
     private class ButtonDeleteHero implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            setVisible(true);
-            StartGame.commandGui = "b";
-            String isSpace = EnterId.getText().trim();
-            Controller.idDel = Long.parseLong(isSpace);
-            Main.flagGui = true;
+            try {
+                setVisible(true);
+                StartGame.commandGui = "b";
+                String isSpace = EnterId.getText().trim();
+                Controller.idDel = Long.parseLong(isSpace);
+                Main.flagGui = true;
+            }
+            catch (NumberFormatException ex)
+            {
+                Main.flagGui = false;
+            }
         }
     }
 
@@ -367,7 +373,7 @@ public class Gui extends JFrame implements GameView{
     @Override
     public void ChoiceDeletePlayer() {
         ClearWindow();
-        JLabel textEnterId = new JLabel("Hero removed!!!");
+        JLabel textEnterId = new JLabel("Hero removed!?");
         add(textEnterId);
         setVisible(true);
     }

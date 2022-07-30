@@ -45,7 +45,9 @@ public class Console implements GameView{
 
     @Override
     public void ChoiceRace() {
+        System.out.print(ANSI_GREEN);
         System.out.println("--- Choice Race ---");
+        System.out.print(ANSI_PURPLE);
         System.out.println
                 (
                         "1) DarkElf\t" + "2) Dwarf\t" + "3) Elf    \t" + "4) Human\t" + "5) Orc" +
@@ -53,22 +55,30 @@ public class Console implements GameView{
                         "\nDefense=2;\t" + "Defense=2;\t" + "Defense=2;\t" + "Defense=2;\t" + "Defense=2;\t" +
                         "\nHP=40.   \t" + "HP=40.    \t" + "HP=40.  \t" + "HP=40.  \t" + "HP=40.  \t"
                 );
+        System.out.print(ANSI_RESET);
     }
 
     @Override
     public void ChoiceClass() {
+        System.out.print(ANSI_GREEN);
         System.out.println("--- Choice Class ---");
+        System.out.print(ANSI_PURPLE);
         System.out.println("1) Warrior" + "\n2) Wizard" + "\n3) Berserk" + "\n4) Necromancer");
+        System.out.print(ANSI_RESET);
     }
 
     @Override
     public void CreateNamePlayer() {
+        System.out.print(ANSI_GREEN);
         System.out.println("--- Create Name Player ---");
+        System.out.print(ANSI_RESET);
     }
 
     @Override
     public void ChoiceDeletePlayer() {
+        System.out.print(ANSI_GREEN);
         System.out.println("--- Enter ID Hero ---");
+        System.out.print(ANSI_RESET);
     }
 
     @Override
